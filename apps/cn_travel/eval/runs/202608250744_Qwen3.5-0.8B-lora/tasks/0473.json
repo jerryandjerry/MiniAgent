@@ -1,0 +1,68 @@
+{
+  "idx": 473,
+  "workflow": "W1",
+  "route": "W1-D",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "崇左",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "崇左",
+          "start_date": "2026-09-03",
+          "num_days": 1
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 2019.5,
+  "rounds": 5,
+  "tokens_in": 22262,
+  "tokens_out": 353,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0473.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,61 @@
+{
+  "idx": 883,
+  "workflow": "W1",
+  "route": "W1-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "广德",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "广德",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "广德",
+          "start_date": "2026-09-03",
+          "num_days": 2
+        }
+      },
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "广德",
+          "start_date": "2026-09-03",
+          "num_days": 2
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 23411.4,
+  "rounds": 3,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0883.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

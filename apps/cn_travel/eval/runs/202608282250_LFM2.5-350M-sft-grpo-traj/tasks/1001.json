@@ -1,0 +1,61 @@
+{
+  "idx": 1001,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "凯里",
+          "requirements": "市中心附近的"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "凯里",
+          "requirements": ""
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:requirements"
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "文旅凯都酒店(凯里市中心大十字店)",
+          "location": "凯里"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "石头酒店(凯里市区万达广场店)",
+          "location": "凯里"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    }
+  ],
+  "latency_ms": 1089.7,
+  "rounds": 3,
+  "tokens_in": 9743,
+  "tokens_out": 408,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/1001.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

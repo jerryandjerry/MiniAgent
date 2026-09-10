@@ -1,0 +1,30 @@
+import json
+from pathlib import Path
+
+from fastapi.testclient import TestClient
+
+from {{ package_name }}.agent import Agent
+from {{ package_name }}.api import app
+from {{ package_name }}.release_verifier import MANIFEST_PATH
+
+
+def test_runtime_uses_the_policy_bound_by_the_manifest() -> None:
+    manifest = json.loads(Path(MANIFEST_PATH).read_text(encoding="utf-8"))
+    response = Agent().respond("example request")
+    if manifest["status"] == "ready":
+        assert response.status != "policy_compilation_ready"
+    else:
+        assert response.status == "policy_compilation_ready"
+        assert "BUSINESS_BRIEF.md" in response.message
+
+
+def test_http_contract() -> None:
+    client = TestClient(app)
+    assert client.get("/health").json() == {"status": "ok"}
+    manifest = json.loads(Path(MANIFEST_PATH).read_text(encoding="utf-8"))
+    expected_readiness = 200 if manifest["status"] == "ready" else 503
+    assert client.get("/ready").status_code == expected_readiness
+    response = client.post("/v1/chat", json={"message": "example request"})
+    assert response.status_code == expected_readiness
+    if expected_readiness == 200:
+        assert response.json()["status"] != "policy_compilation_ready"

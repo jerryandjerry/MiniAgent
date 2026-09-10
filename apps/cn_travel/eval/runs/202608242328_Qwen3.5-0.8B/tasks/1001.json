@@ -1,0 +1,75 @@
+{
+  "idx": 1001,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "凯里",
+          "requirements": "市中心附近的"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "文旅凯都酒店(凯里市中心大十字店)",
+          "location": "凯里"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "凯里"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "凯里",
+          "start_date": "2026-08-23",
+          "num_days": 3
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 2372.0,
+  "rounds": 3,
+  "tokens_in": 12269,
+  "tokens_out": 843,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/1001.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,41 @@
+{
+  "idx": 786,
+  "workflow": "W3",
+  "route": "W3-D",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "凤栖楼酒店(邛崃高铁站店)",
+          "location": "邛崃"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "凤栖楼酒店(邛崃高铁站店)"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    }
+  ],
+  "latency_ms": 12106.7,
+  "rounds": 2,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0786.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

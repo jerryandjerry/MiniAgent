@@ -1,0 +1,305 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:miniagent:schema:application:v1",
+  "title": "MiniAgent Application Contract",
+  "description": "The client-owned business intent and the application artifacts compiled from it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "application_id",
+    "package",
+    "name",
+    "version",
+    "business",
+    "interfaces",
+    "artifacts",
+    "acceptance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "miniagent.application.v1"
+    },
+    "status": {
+      "enum": ["draft", "approved"]
+    },
+    "application_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "package": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "business": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "objective",
+        "users",
+        "supported_requests",
+        "rules",
+        "context_fields",
+        "systems",
+        "outcomes"
+      ],
+      "properties": {
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "users": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "supported_requests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "description"],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/identifier"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "statement"],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/identifier"
+              },
+              "statement": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "context_fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "description", "schema"],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "required": {
+                "type": "boolean",
+                "default": false
+              },
+              "schema": {
+                "$ref": "#/$defs/json_schema"
+              }
+            }
+          }
+        },
+        "systems": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "purpose", "access"],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/identifier"
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1
+              },
+              "access": {
+                "enum": ["read", "write"]
+              }
+            }
+          }
+        },
+        "outcomes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["completion", "empty", "error", "refusal"],
+          "properties": {
+            "completion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "empty": {
+              "type": "string",
+              "minLength": 1
+            },
+            "error": {
+              "type": "string",
+              "minLength": 1
+            },
+            "refusal": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "interfaces": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["api", "cli", "event", "library"]
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workflows",
+        "tools",
+        "dataset_manifests",
+        "training_runs",
+        "evaluation_results",
+        "releases",
+        "runtime_source"
+      ],
+      "properties": {
+        "workflows": {
+          "$ref": "#/$defs/path_list"
+        },
+        "tools": {
+          "$ref": "#/$defs/path_list"
+        },
+        "dataset_manifests": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "training_runs": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "evaluation_results": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "releases": {
+          "$ref": "#/$defs/relative_path"
+        },
+        "runtime_source": {
+          "$ref": "#/$defs/relative_path"
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria", "metrics"],
+      "properties": {
+        "criteria": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "operator", "threshold"],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/identifier"
+              },
+              "operator": {
+                "enum": [">", ">=", "<", "<=", "=="]
+              },
+              "threshold": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "approved"}
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "business": {
+            "properties": {
+              "users": {"minItems": 1},
+              "supported_requests": {"minItems": 1},
+              "rules": {"minItems": 1}
+            }
+          },
+          "acceptance": {
+            "properties": {
+              "criteria": {"minItems": 1},
+              "metrics": {"minItems": 1}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*$"
+    },
+    "json_schema": {
+      "type": "object",
+      "required": ["type"]
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"
+    },
+    "path_list": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/relative_path"
+      }
+    }
+  }
+}

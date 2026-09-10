@@ -1,0 +1,42 @@
+{
+  "idx": 995,
+  "workflow": "W3",
+  "route": "W3-D",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "维多利亚酒店(湘乡东山店)",
+          "location": "湘乡"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "维多利亚酒店(湘乡东山店)",
+          "location": "湘乡东山"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    }
+  ],
+  "latency_ms": 490.4,
+  "rounds": 2,
+  "tokens_in": 5303,
+  "tokens_out": 76,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0995.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

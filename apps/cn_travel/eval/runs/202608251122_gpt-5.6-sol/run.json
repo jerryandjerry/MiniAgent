@@ -1,0 +1,13 @@
+{
+  "system": "gpt-5.6-sol",
+  "model": "gpt-5.6-sol",
+  "base_url": "http://127.0.0.1:8768/v1",
+  "note": "OpenAI cloud · codex CLI channel",
+  "price_in_per_mtok": 0.0,
+  "price_out_per_mtok": 0.0,
+  "max_rounds": 6,
+  "temperature": 0,
+  "cases": 101,
+  "started_at": "2026-08-31T23:50:20-05:00",
+  "finished_at": "2026-09-01T00:26:42-05:00"
+}

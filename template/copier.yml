@@ -1,0 +1,44 @@
+_min_copier_version: "9.0"
+_subdirectory: skeleton
+_templates_suffix: .jinja
+_message_after_copy: |
+  {{ app_name }} is ready at {{ _copier_conf.dst_path }}.
+
+  Next:
+    1. Complete BUSINESS_BRIEF.md.
+    2. Ask a coding agent to compile the brief into the application contract.
+    3. Run make help.
+
+app_name:
+  type: str
+  help: Human-readable application name
+  default: Business Assistant
+
+package_name:
+  type: str
+  help: Python import package using lowercase letters, numbers, and underscores
+  default: "{{ app_name | lower | replace(' ', '_') | replace('-', '_') }}"
+  validator: >-
+    {% set python_keywords = ['and', 'as', 'assert', 'async', 'await', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield'] %}
+    {% if not (package_name | regex_search('^[a-z][a-z0-9_]*$')) or package_name in python_keywords %}
+    Use lowercase letters, numbers, and underscores, beginning with a letter.
+    {% endif %}
+
+description:
+  type: str
+  help: One-sentence business outcome
+  default: A specialist agent compiled from explicit business logic.
+
+author_name:
+  type: str
+  help: Application owner
+  default: Application Team
+
+python_version:
+  type: str
+  help: Runtime Python version
+  default: "3.11"
+  validator: >-
+    {% if not (python_version | regex_search('^3\\.(9|1[0-9])$')) %}
+    Use Python 3.9 or newer in major.minor form.
+    {% endif %}

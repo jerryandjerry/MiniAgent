@@ -1,0 +1,22 @@
+{
+  "idx": 982,
+  "workflow": "W4",
+  "route": "W4-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 0,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [],
+  "latency_ms": 141.1,
+  "rounds": 1,
+  "tokens_in": 2911,
+  "tokens_out": 52,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0982.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

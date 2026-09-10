@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{ package_name | replace('_', '-') }}"
+version = "0.1.0"
+description = {{ description | to_json }}
+requires-python = ">={{ python_version }}"
+authors = [{ name = {{ author_name | to_json }} }]
+dependencies = [
+    "fastapi>=0.115,<1",
+    "jsonschema>=4.23,<5",
+    "packaging>=24,<27",
+    "pydantic>=2.10,<3",
+    "python-dotenv>=1.0,<2",
+    "uvicorn>=0.30,<1",
+]
+
+[project.optional-dependencies]
+test = [
+    "httpx>=0.27,<1",
+    "pytest>=8,<10",
+]
+
+[project.scripts]
+{{ package_name | replace('_', '-') }} = "{{ package_name }}.cli:main"
+{{ package_name | replace('_', '-') }}-api = "{{ package_name }}.api:main"
+
+[tool.hatch.build]
+artifacts = [
+    "{{ package_name }}/business_logic/**",
+    "{{ package_name }}/model/policy/**",
+    "{{ package_name }}/tool/knowledge_base/**",
+    "{{ package_name }}/deployment_manifest.json",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["{{ package_name }}"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "{{ package_name }}",
+    "tests",
+    "README.md",
+    "pyproject.toml",
+    ".env.example",
+    ".python-version",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]

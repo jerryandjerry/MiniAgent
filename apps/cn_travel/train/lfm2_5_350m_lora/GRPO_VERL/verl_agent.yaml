@@ -1,0 +1,2 @@
+- name: cn_travel
+  _target_: verl_loop.TravelAgentLoop

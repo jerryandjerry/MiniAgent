@@ -1,0 +1,61 @@
+{
+  "idx": 992,
+  "workflow": "W1",
+  "route": "W1-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "台山",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "台山",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "台山",
+          "start_date": "2026-08-29",
+          "num_days": 5
+        }
+      },
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "台山",
+          "start_date": "2026-08-29",
+          "num_days": 5
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 2793.7,
+  "rounds": 3,
+  "tokens_in": 12506,
+  "tokens_out": 618,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0992.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,49 @@
+{
+  "idx": 959,
+  "workflow": "W3",
+  "route": "W3-D",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "泗洪明发国际大酒店",
+          "location": "泗洪"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "泗洪明",
+          "requirements": "五星级"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 234.1,
+  "rounds": 2,
+  "tokens_in": 5895,
+  "tokens_out": 80,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0959.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

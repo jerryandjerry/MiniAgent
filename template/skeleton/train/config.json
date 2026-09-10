@@ -1,0 +1,9 @@
+{
+  "schema_version": "miniagent.training-run.v1",
+  "status": "draft",
+  "command": [],
+  "input_manifest": "data/artifacts/manifests/replace-with-dataset-id.json",
+  "input_split": "train",
+  "run_configuration": "train/configurations/replace-with-run-id.json",
+  "output_manifest": "train/runs/replace-with-run-id/training-manifest.json"
+}

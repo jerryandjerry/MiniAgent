@@ -1,0 +1,395 @@
+import hashlib
+import json
+import shutil
+from pathlib import Path
+
+import pytest
+
+from {{ package_name }} import release_verifier
+
+
+def _artifact(path: str, content: bytes) -> dict:
+    return {
+        "path": path,
+        "sha256": hashlib.sha256(content).hexdigest(),
+        "bytes": len(content),
+    }
+
+
+def _application(application_id: str = "{{ package_name }}", package: str = "{{ package_name }}") -> dict:
+    return {
+        "schema_version": "miniagent.application.v1",
+        "status": "approved",
+        "application_id": application_id,
+        "package": package,
+        "name": "Test application",
+        "version": "1.0.0",
+        "business": {
+            "objective": "Complete the test business outcome.",
+            "users": ["test user"],
+            "supported_requests": [
+                {"id": "request.test", "description": "Test request"}
+            ],
+            "rules": [{"id": "rule.test", "statement": "Follow the test rule."}],
+            "context_fields": [],
+            "systems": [],
+            "outcomes": {
+                "completion": "Complete the request.",
+                "empty": "Report an empty result.",
+                "error": "Report an execution error.",
+                "refusal": "Report the supported scope.",
+            },
+        },
+        "interfaces": ["api", "cli"],
+        "artifacts": {
+            "workflows": ["business_logic/workflow.json"],
+            "tools": ["business_logic/tool.json"],
+            "dataset_manifests": "data/dataset-manifest.json",
+            "training_runs": "train/runs",
+            "evaluation_results": "eval/results",
+            "releases": "eval/releases",
+            "runtime_source": "src/{{ package_name }}",
+        },
+        "acceptance": {
+            "criteria": ["Complete the workflow."],
+            "metrics": [
+                {
+                    "name": "task.completion",
+                    "operator": ">=",
+                    "threshold": 0.9,
+                    "unit": "ratio",
+                }
+            ],
+        },
+    }
+
+
+def _release(
+    policy: dict,
+    parser: dict,
+    runtime_adapter: dict,
+    application: dict,
+    workflow: dict,
+    tool_contract: dict,
+) -> dict:
+    placeholder = {"path": "evidence.json", "sha256": "0" * 64, "bytes": 1}
+    return {
+        "schema_version": "miniagent.release-manifest.v1",
+        "release_id": "release.test",
+        "application_id": "{{ package_name }}",
+        "version": "1.0.0",
+        "created_at": "2026-01-01T00:00:00Z",
+        "source_revision": "1234567",
+        "policy": {
+            "model_id": "test-policy",
+            "model_revision": "revision-1",
+            "format": "safetensors",
+            "action_parser": {
+                "name": "native",
+                "artifact": {**parser, "path": "train/action_parser.py"},
+            },
+            "runtime": {
+                "entrypoint": "{{ package_name }}.model.selected_policy:SelectedPolicy",
+                "artifact": {
+                    **runtime_adapter,
+                    "path": "train/selected_policy.py",
+                },
+            },
+            "weights": [
+                {
+                    "role": "merged",
+                    "artifact": {**policy, "path": "train/policy.bin"},
+                }
+            ],
+        },
+        "runtime": {
+            "package": "{{ package_name }}",
+            "python": ">=3.11,<3.12",
+            "entrypoints": {"api": "{{ package_name }}.api:app"},
+            "healthcheck": "/health",
+            "environment": [],
+            "bundle": [],
+        },
+        "artifacts": [
+            {
+                "role": "application_contract",
+                "artifact": {
+                    **application,
+                    "path": "data/specification/application.json",
+                },
+            },
+            {
+                "role": "workflow",
+                "artifact": {**workflow, "path": "data/specification/workflow.json"},
+            },
+            {
+                "role": "tool_contract",
+                "artifact": {
+                    **tool_contract,
+                    "path": "data/specification/tool.json",
+                },
+            },
+        ],
+        "evaluation": {
+            "evaluation_id": "evaluation.test",
+            "manifest": placeholder,
+            "leaderboard_entry": {
+                "evaluation_id": "evaluation.test",
+                "created_at": "2026-01-01T00:00:00Z",
+                "candidate_id": "test-policy",
+                "candidate_version": "revision-1",
+                "comparability_key": "1" * 64,
+                "status": "passed",
+                "metrics": [{"name": "task.completion", "value": 1.0}],
+                "manifest": placeholder,
+            },
+            "status": "passed",
+        },
+        "provenance": {
+            "application": {
+                **application,
+                "path": "data/specification/application.json",
+            },
+            "workflows": [
+                {**workflow, "path": "data/specification/workflow.json"}
+            ],
+            "tools": [
+                {**tool_contract, "path": "data/specification/tool.json"}
+            ],
+            "dataset": placeholder,
+            "training": placeholder,
+        },
+        "verification": [
+            {"name": "standalone", "status": "passed", "evidence": placeholder}
+        ],
+        "status": "ready",
+    }
+
+
+def _write_release(tmp_path: Path) -> tuple[Path, dict]:
+    package_root = tmp_path / "{{ package_name }}"
+    business_logic = package_root / "business_logic"
+    model = package_root / "model"
+    business_logic.mkdir(parents=True)
+    model.mkdir()
+    shutil.copy2(release_verifier.APPLICATION_SCHEMA_PATH, business_logic / "application.schema.json")
+    shutil.copy2(release_verifier.RELEASE_SCHEMA_PATH, business_logic / "release.schema.json")
+    (tmp_path / "pyproject.toml").write_text("[project]\nname='test'\n", encoding="utf-8")
+    (tmp_path / "uv.lock").write_text("version = 1\n", encoding="utf-8")
+    (tmp_path / ".python-version").write_text("3.11\n", encoding="utf-8")
+    for name in ("agent.py", "api.py", "cli.py", "release_verifier.py", "__init__.py"):
+        (package_root / name).write_text(f'"""{name}."""\n', encoding="utf-8")
+
+    application_payload = _application()
+    application_content = (
+        json.dumps(application_payload, sort_keys=True) + "\n"
+    ).encode("utf-8")
+    application_path = business_logic / "application.json"
+    application_path.write_bytes(application_content)
+    policy_content = b"policy"
+    parser_content = b"parser"
+    runtime_content = b"class SelectedPolicy:\n    def respond(self, request):\n        return request\n"
+    workflow_content = b"workflow"
+    tool_content = b"tool contract"
+    (model / "policy.bin").write_bytes(policy_content)
+    (model / "action_parser.py").write_bytes(parser_content)
+    (model / "selected_policy.py").write_bytes(runtime_content)
+    (business_logic / "workflow.json").write_bytes(workflow_content)
+    (business_logic / "tool.json").write_bytes(tool_content)
+    application = _artifact("{{ package_name }}/business_logic/application.json", application_content)
+    policy = _artifact("{{ package_name }}/model/policy.bin", policy_content)
+    parser = _artifact("{{ package_name }}/model/action_parser.py", parser_content)
+    runtime_adapter = _artifact("{{ package_name }}/model/selected_policy.py", runtime_content)
+    workflow = _artifact("{{ package_name }}/business_logic/workflow.json", workflow_content)
+    tool_contract = _artifact("{{ package_name }}/business_logic/tool.json", tool_content)
+    release = _release(
+        policy,
+        parser,
+        runtime_adapter,
+        application,
+        workflow,
+        tool_contract,
+    )
+    special_roles = {
+        policy["path"]: "policy",
+        parser["path"]: "runtime_asset",
+        runtime_adapter["path"]: "runtime_asset",
+        application["path"]: "application_contract",
+        workflow["path"]: "workflow",
+        tool_contract["path"]: "tool_contract",
+    }
+    bundle = []
+    for path in sorted(item for item in tmp_path.rglob("*") if item.is_file()):
+        relative = path.relative_to(tmp_path).as_posix()
+        role = special_roles.get(relative)
+        if role is None:
+            role = "test" if relative.startswith("tests/") else "runtime_code" if relative.endswith(".py") else "dependency"
+        record = _artifact(relative, path.read_bytes())
+        bundle.append({"role": role, **record})
+    release["runtime"]["bundle"] = bundle
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    return package_root, release
+
+
+def test_ready_release_verifies_and_tampering_fails(tmp_path) -> None:
+    package_root, _ = _write_release(tmp_path)
+    assert release_verifier.verify_release(package_root)["release_id"] == "release.test"
+
+    (package_root / "model/policy.bin").write_bytes(b"tampered")
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="hash differs"):
+        release_verifier.verify_release(package_root)
+
+
+def test_runtime_source_mutation_fails_readiness(tmp_path) -> None:
+    package_root, _ = _write_release(tmp_path)
+    (package_root / "agent.py").write_text("changed = True\n", encoding="utf-8")
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="hash differs"):
+        release_verifier.verify_release(package_root)
+
+
+def test_local_environment_file_is_runtime_configuration(tmp_path) -> None:
+    package_root, _ = _write_release(tmp_path)
+    (tmp_path / ".env").write_text("LOCAL_VALUE=configured\n", encoding="utf-8")
+    assert release_verifier.verify_release(package_root)["status"] == "ready"
+
+
+def test_required_environment_is_enforced(tmp_path, monkeypatch) -> None:
+    package_root, release = _write_release(tmp_path)
+    release["runtime"]["environment"] = [
+        {
+            "name": "TEST_REQUIRED_TOKEN",
+            "description": "Test runtime token.",
+            "required": True,
+            "secret": True,
+        }
+    ]
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    monkeypatch.delenv("TEST_REQUIRED_TOKEN", raising=False)
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="environment"):
+        release_verifier.verify_release(package_root)
+
+
+def test_runtime_python_constraint_is_enforced(tmp_path) -> None:
+    package_root, release = _write_release(tmp_path)
+    release["runtime"]["python"] = ">=99"
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="outside"):
+        release_verifier.verify_release(package_root)
+
+
+def test_runtime_package_symlink_is_rejected(tmp_path) -> None:
+    package_root, _ = _write_release(tmp_path / "real")
+    alias_root = tmp_path / "alias"
+    alias_root.mkdir()
+    linked_package = alias_root / "{{ package_name }}"
+    linked_package.symlink_to(package_root, target_is_directory=True)
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="ancestry"):
+        release_verifier.verify_release(linked_package)
+
+
+def test_readiness_requires_approved_schema_valid_application(tmp_path) -> None:
+    package_root, release = _write_release(tmp_path)
+    application_path = package_root / "business_logic/application.json"
+    application = json.loads(application_path.read_text(encoding="utf-8"))
+    application["status"] = "draft"
+    application_path.write_text(json.dumps(application), encoding="utf-8")
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="approved"):
+        release_verifier.verify_release(package_root)
+
+    application["status"] = "approved"
+    application.pop("business")
+    application_path.write_text(json.dumps(application), encoding="utf-8")
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="schema"):
+        release_verifier.verify_release(package_root)
+
+
+@pytest.mark.parametrize("identity", ["application_id", "runtime.package"])
+def test_readiness_binds_application_and_package_identity(tmp_path, identity) -> None:
+    package_root, release = _write_release(tmp_path)
+    if identity == "application_id":
+        release["application_id"] = "another_app"
+    else:
+        release["runtime"]["package"] = "another_app"
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="differs"):
+        release_verifier.verify_release(package_root)
+
+
+def test_readiness_binds_the_application_package(tmp_path) -> None:
+    package_root, release = _write_release(tmp_path)
+    application_path = package_root / "business_logic/application.json"
+    application = json.loads(application_path.read_text(encoding="utf-8"))
+    application["package"] = "another_app"
+    application_path.write_text(json.dumps(application), encoding="utf-8")
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="configured package"):
+        release_verifier.verify_release(package_root)
+
+
+@pytest.mark.parametrize(
+    ("path", "replacement", "message"),
+    [
+        ("{{ package_name }}/model/policy.bin", "runtime_asset", "policy bundle"),
+        ("{{ package_name }}/model/action_parser.py", "configuration", "action parser"),
+        ("{{ package_name }}/business_logic/application.json", "configuration", "exactly one application contract"),
+        ("{{ package_name }}/business_logic/workflow.json", "tool_contract", "released workflow"),
+        ("{{ package_name }}/business_logic/tool.json", "workflow", "released tool_contract"),
+    ],
+)
+def test_runtime_bundle_requires_exact_roles(
+    tmp_path, path, replacement, message
+) -> None:
+    package_root, release = _write_release(tmp_path)
+    record = next(item for item in release["runtime"]["bundle"] if item["path"] == path)
+    record["role"] = replacement
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    with pytest.raises(release_verifier.ReleaseVerificationError, match=message):
+        release_verifier.verify_release(package_root)
+
+
+@pytest.mark.parametrize("index", [0, 1, 2, 3, 4])
+def test_runtime_bundle_requires_exact_byte_count(tmp_path, index) -> None:
+    package_root, release = _write_release(tmp_path)
+    release["runtime"]["bundle"][index]["bytes"] += 1
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    with pytest.raises(release_verifier.ReleaseVerificationError, match="byte count"):
+        release_verifier.verify_release(package_root)
+
+
+def test_workflow_release_artifacts_cannot_omit_provenance(tmp_path) -> None:
+    package_root, release = _write_release(tmp_path)
+    release["artifacts"] = [
+        item for item in release["artifacts"] if item["role"] != "workflow"
+    ]
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    with pytest.raises(
+        release_verifier.ReleaseVerificationError,
+        match="workflow artifacts must equal workflows provenance",
+    ):
+        release_verifier.verify_release(package_root)
+
+
+def test_tool_release_artifacts_must_match_provenance(tmp_path) -> None:
+    package_root, release = _write_release(tmp_path)
+    release["provenance"]["tools"][0]["bytes"] += 1
+    (package_root / "deployment_manifest.json").write_text(
+        json.dumps(release), encoding="utf-8"
+    )
+    with pytest.raises(
+        release_verifier.ReleaseVerificationError,
+        match="tool_contract artifacts must equal tools provenance",
+    ):
+        release_verifier.verify_release(package_root)

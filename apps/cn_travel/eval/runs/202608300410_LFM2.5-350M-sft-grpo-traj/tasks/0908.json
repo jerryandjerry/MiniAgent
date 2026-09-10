@@ -1,0 +1,61 @@
+{
+  "idx": 908,
+  "workflow": "W1",
+  "route": "W1-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "茂名",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "茂名",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "茂名",
+          "start_date": "2026-09-01",
+          "num_days": 3
+        }
+      },
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "茂名",
+          "start_date": "2026-09-01",
+          "num_days": 3
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 1537.8,
+  "rounds": 3,
+  "tokens_in": 14751,
+  "tokens_out": 594,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0908.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

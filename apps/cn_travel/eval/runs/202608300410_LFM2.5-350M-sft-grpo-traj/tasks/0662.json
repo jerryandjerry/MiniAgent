@@ -1,0 +1,42 @@
+{
+  "idx": 662,
+  "workflow": "W3",
+  "route": "W3-H",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "秋果国际酒店(黄骅信誉楼百货店)",
+          "location": "黄骅"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "口碑到底怎么样",
+          "location": "秋果国际酒店(黄骅信誉楼百货店)"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    }
+  ],
+  "latency_ms": 445.6,
+  "rounds": 3,
+  "tokens_in": 8964,
+  "tokens_out": 113,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0662.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

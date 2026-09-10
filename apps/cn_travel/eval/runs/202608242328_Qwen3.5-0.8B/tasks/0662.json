@@ -1,0 +1,103 @@
+{
+  "idx": 662,
+  "workflow": "W3",
+  "route": "W3-H",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 5,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "之前那家酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "阳江"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "阳江",
+          "start_date": "2026-08-23",
+          "num_days": 7
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "秋果国际酒店(黄骅信誉楼百货店)",
+          "location": "黄骅"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "秋果国际酒店(黄骅信誉楼百货店)"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    },
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "黄骅"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "黄骅"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 2668.4,
+  "rounds": 8,
+  "tokens_in": 27409,
+  "tokens_out": 827,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0662.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

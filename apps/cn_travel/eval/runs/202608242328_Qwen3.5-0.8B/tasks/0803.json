@@ -1,0 +1,114 @@
+{
+  "idx": 803,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 5,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "莱州",
+          "end_location": "富锦",
+          "city": "富锦"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "118.50685,31.668765",
+          "end_location": "莱州",
+          "city": "马鞍山"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:city"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "118.50685,31.668765",
+          "end_location": "富锦",
+          "city": "马鞍山"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "118.50685,31.668765",
+          "end_location": "莱州",
+          "city": "马鞍山"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "118.50685,31.668765",
+          "end_location": "富锦",
+          "city": "马鞍山"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "118.50685,31.668765",
+          "end_location": "莱州",
+          "city": "马鞍山"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "118.50685,31.668765",
+          "end_location": "富锦",
+          "city": "马鞍山"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1375.0,
+  "rounds": 6,
+  "tokens_in": 17253,
+  "tokens_out": 414,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0803.json",
+  "error": null,
+  "cap_hit": true,
+  "complete": false,
+  "rollout_complete": true
+}

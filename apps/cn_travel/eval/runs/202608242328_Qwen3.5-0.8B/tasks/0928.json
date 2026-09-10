@@ -1,0 +1,50 @@
+{
+  "idx": 928,
+  "workflow": "W5",
+  "route": "W5-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 0,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "桂平",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "桂平",
+          "start_date": "2026-08-23",
+          "num_days": 7
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 2998.0,
+  "rounds": 3,
+  "tokens_in": 12566,
+  "tokens_out": 1075,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0928.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

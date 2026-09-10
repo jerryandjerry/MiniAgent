@@ -1,0 +1,43 @@
+{
+  "idx": 286,
+  "workflow": "W2",
+  "route": "W2-C",
+  "expect": "error",
+  "turns": 2,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "113.516427,33.314147",
+          "end_location": "钓鱼岛海域",
+          "city": "舞钢市"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "113.516427,33.314147",
+          "end_location": "钓鱼岛海域",
+          "city": "舞钢市"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 406.7,
+  "rounds": 3,
+  "tokens_in": 8840,
+  "tokens_out": 93,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0286.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

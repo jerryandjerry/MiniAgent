@@ -1,0 +1,114 @@
+{
+  "idx": 954,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 5,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "新泰",
+          "end_location": "锡林浩特",
+          "city": "锡林浩特"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "锡林浩特",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:city"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "锡林浩特",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "锡林浩特",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "锡林浩特",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "锡林浩特",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "锡林浩特",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1430.1,
+  "rounds": 6,
+  "tokens_in": 17325,
+  "tokens_out": 432,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0954.json",
+  "error": null,
+  "cap_hit": true,
+  "complete": false,
+  "rollout_complete": true
+}

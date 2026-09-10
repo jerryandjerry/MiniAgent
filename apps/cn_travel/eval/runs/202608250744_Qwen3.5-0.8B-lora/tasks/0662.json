@@ -1,0 +1,55 @@
+{
+  "idx": 662,
+  "workflow": "W3",
+  "route": "W3-H",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "之前那家酒店",
+          "location": "之前那家酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "秋果国际酒店(黄骅信誉楼百货店)",
+          "location": "黄骅"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "秋果国际酒店(黄骅信誉楼百货店)",
+          "location": "黄骅信誉楼百货店"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    }
+  ],
+  "latency_ms": 1108.9,
+  "rounds": 4,
+  "tokens_in": 10940,
+  "tokens_out": 186,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0662.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

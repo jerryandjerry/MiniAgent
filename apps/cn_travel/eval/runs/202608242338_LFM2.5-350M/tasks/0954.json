@@ -1,0 +1,44 @@
+{
+  "idx": 954,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "新泰",
+          "end_location": "锡林浩特",
+          "city": "锡林浩特"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "122.708475,48.028396",
+          "end_location": "101081012",
+          "city": "新泰"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:city"
+    }
+  ],
+  "latency_ms": 263.4,
+  "rounds": 2,
+  "tokens_in": 5902,
+  "tokens_out": 100,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0954.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

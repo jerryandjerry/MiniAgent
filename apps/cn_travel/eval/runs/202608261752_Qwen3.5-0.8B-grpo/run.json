@@ -1,0 +1,13 @@
+{
+  "system": "Qwen3.5-0.8B-SFT-GRPO-per-step",
+  "model": "qwen3.5-0.8b-grpo",
+  "base_url": "http://127.0.0.1:8001/v1",
+  "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+  "price_in_per_mtok": 0.0,
+  "price_out_per_mtok": 0.0,
+  "max_rounds": 6,
+  "temperature": 0,
+  "cases": 101,
+  "started_at": "2026-09-01T00:47:17-05:00",
+  "finished_at": "2026-09-01T00:49:28-05:00"
+}

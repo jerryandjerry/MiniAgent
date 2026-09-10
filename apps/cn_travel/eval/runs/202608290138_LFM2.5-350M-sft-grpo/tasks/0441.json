@@ -1,0 +1,59 @@
+{
+  "idx": 441,
+  "workflow": "W3",
+  "route": "W3-F",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "亳州",
+          "requirements": "预算450元左右"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "亳州",
+          "requirements": "预算450元左右"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "亳州文化公园希尔顿欢朋酒店",
+          "location": "亳州"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "亳州文化公园希尔顿欢朋酒店",
+          "location": "亳州"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 983.7,
+  "rounds": 4,
+  "tokens_in": 12792,
+  "tokens_out": 331,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0441.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

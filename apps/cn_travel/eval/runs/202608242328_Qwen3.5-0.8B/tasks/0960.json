@@ -1,0 +1,70 @@
+{
+  "idx": 960,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "榆树",
+          "end_location": "德州",
+          "city": "德州"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "119.80584,36.365658",
+          "end_location": "德州",
+          "city": "德州"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:start_location"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "德州"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "德州",
+          "start_date": "2026-08-23",
+          "num_days": 7
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 2336.9,
+  "rounds": 4,
+  "tokens_in": 13421,
+  "tokens_out": 824,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0960.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

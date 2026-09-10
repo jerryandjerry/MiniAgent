@@ -1,0 +1,50 @@
+{
+  "idx": 975,
+  "workflow": "W4",
+  "route": "W4-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 0,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "北京",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "北京",
+          "start_date": "2026-08-23",
+          "num_days": 3
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1244.1,
+  "rounds": 3,
+  "tokens_in": 11005,
+  "tokens_out": 407,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0975.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

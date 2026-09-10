@@ -1,0 +1,59 @@
+{
+  "idx": 341,
+  "workflow": "W3",
+  "route": "W3-G",
+  "expect": "ok",
+  "turns": 2,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "广元",
+          "requirements": ""
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "广元",
+          "requirements": ""
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "广元利州广场希尔顿欢朋酒店",
+          "location": "广元"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "广元利州广场希尔顿欢朋酒店",
+          "location": "广元"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 1084.3,
+  "rounds": 4,
+  "tokens_in": 12836,
+  "tokens_out": 385,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0341.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

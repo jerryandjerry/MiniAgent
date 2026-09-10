@@ -1,0 +1,63 @@
+{
+  "idx": 789,
+  "workflow": "W1",
+  "route": "W1-H",
+  "expect": "empty",
+  "turns": 3,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 2,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 2,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "汾阳",
+          "start_date": "2026-08-31",
+          "num_days": 4
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1114.7,
+  "rounds": 5,
+  "tokens_in": 13466,
+  "tokens_out": 174,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0789.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

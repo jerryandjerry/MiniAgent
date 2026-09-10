@@ -1,0 +1,75 @@
+"""Command-line interface for {{ app_name }}."""
+
+import argparse
+from typing import Optional, Sequence
+
+from .agent import Agent
+from .config import settings
+from .model import load_policy
+from .release_verifier import ReleaseVerificationError, verify_release
+
+def _serve(host: str, port: int) -> int:
+    import uvicorn
+
+    uvicorn.run(
+        "{{ package_name }}.api:app",
+        host=host,
+        port=port,
+        log_level=settings.log_level,
+    )
+    return 0
+
+
+def _chat() -> int:
+    try:
+        verify_release()
+    except ReleaseVerificationError as exc:
+        print(f"Runtime action: {exc}")
+        return 2
+    agent = Agent()
+    print("{{ app_name }} interactive session. Enter /exit to finish.")
+    while True:
+        try:
+            message = input("> ").strip()
+        except EOFError:
+            print()
+            return 0
+        if message == "/exit":
+            return 0
+        if message:
+            print(agent.respond(message).message)
+
+
+def _validate() -> int:
+    try:
+        manifest = verify_release()
+        load_policy()
+    except (ReleaseVerificationError, ImportError, AttributeError, RuntimeError) as exc:
+        print(f"Runtime action: {exc}")
+        return 2
+    print(f"Runtime manifest: release={manifest['release_id']} status=ready")
+    return 0
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="{{ package_name | replace('_', '-') }}")
+    commands = parser.add_subparsers(dest="command", required=True)
+    serve = commands.add_parser("serve", help="Start the HTTP API")
+    serve.add_argument("--host", default=settings.host)
+    serve.add_argument("--port", type=int, default=settings.port)
+    commands.add_parser("chat", help="Start an interactive session")
+    commands.add_parser("validate", help="Validate the runtime manifest")
+    return parser
+
+
+def main(argv: Optional[Sequence[str]] = None) -> int:
+    args = _parser().parse_args(argv)
+    if args.command == "serve":
+        return _serve(args.host, args.port)
+    if args.command == "chat":
+        return _chat()
+    return _validate()
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,41 @@
+{
+  "idx": 789,
+  "workflow": "W1",
+  "route": "W1-H",
+  "expect": "empty",
+  "turns": 3,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 2,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 43507.7,
+  "rounds": 4,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0789.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

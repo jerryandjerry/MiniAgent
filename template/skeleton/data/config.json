@@ -1,0 +1,7 @@
+{
+  "schema_version": "miniagent.data-build.v1",
+  "status": "draft",
+  "dataset_id": "replace-with-immutable-dataset-id",
+  "output_directory": "data/artifacts/replace-with-immutable-dataset-id",
+  "output_manifest": "data/artifacts/manifests/replace-with-immutable-dataset-id.json"
+}

@@ -1,0 +1,41 @@
+{
+  "idx": 125,
+  "workflow": "W3",
+  "route": "W3-C",
+  "expect": "empty",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "曲阜绿发JW万豪酒店",
+          "location": "曲阜"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "曲阜绿发JW万豪酒店",
+          "location": "曲阜"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 14835.3,
+  "rounds": 2,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0125.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

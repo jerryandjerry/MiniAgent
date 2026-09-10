@@ -1,0 +1,109 @@
+{
+  "idx": 452,
+  "workflow": "W1",
+  "route": "W1-B",
+  "expect": "empty",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 5,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "惠东",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "惠东",
+          "search_mode": "vector"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:search_mode"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "8月28号",
+          "search_mode": "keyword"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "火车站",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "医院",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "惠东",
+          "start_date": "2026-08-28",
+          "num_days": 2
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "火车站",
+          "start_date": "2026-08-28",
+          "num_days": 2
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 546.3,
+  "rounds": 6,
+  "tokens_in": 18398,
+  "tokens_out": 149,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0452.json",
+  "error": null,
+  "cap_hit": true,
+  "complete": false,
+  "rollout_complete": true
+}

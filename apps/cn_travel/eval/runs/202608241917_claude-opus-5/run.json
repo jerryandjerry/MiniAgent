@@ -1,0 +1,31 @@
+{
+  "system": "claude-opus-5",
+  "model": "claude-opus-5",
+  "base_url": "http://127.0.0.1:8765/v1",
+  "note": "Anthropic cloud · claude CLI channel",
+  "price_in_per_mtok": 0.0,
+  "price_out_per_mtok": 0.0,
+  "max_rounds": 6,
+  "temperature": 0,
+  "cases": 101,
+  "request_timeout_seconds": 120.0,
+  "channel_identity": {
+    "kind": "claude_cli_json_schema_proxy",
+    "claude_code": "2.1.252",
+    "claude_executable_sha256": "b661c6a094fcc32656bf7c0071c5b45bf900b34d4f0a1ab3d78fd59aeba2c2c7",
+    "proxy_sha256": "7fc41aba0582baafeae0a70343a89a5e979269dc5904276b0285df040e3f4b85",
+    "shim_sha256": "1c72deff41e64c10fac5aa5474b4c325e2003c583713ccdc58fbd5f9363280a1",
+    "transport_sha256": "a926b7c8476a95df194352a206d0f4de70fa2a7b0ddbfd634216a5f0b598d557"
+  },
+  "evaluator_identity": {
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "tool_schemas_sha256": "61e46aa71e72b9a5b1f0de360490077b785fa0b408a9c1e21c4573a00f5ea78f",
+    "evaluate_sha256": "1520db93a689a7835146f5193707d42128e3c408fd4c0db33f2270727bf2baba",
+    "rollout_sha256": "619485b12fab184bb85dee6b1d68e1b355c3a9fb3413c20196a92aad366c17ae",
+    "score_sha256": "037f35bed276a04b8967530c289db99b4b026e657626cd2f4c906a2259ee6586",
+    "world_sha256": "3087b6b1b2324e4bdda24b0e1dcc1a196b534a68fb7393192dc63b4ad8dd5e11"
+  },
+  "orchestrator_sha256": "b0a6cd3e6fa456974787c7684216ca278895fe8dbfd48c27d3c43ae4a3a8bd3d",
+  "started_at": "2026-09-01T02:15:44-05:00",
+  "finished_at": "2026-09-01T19:02:50-05:00"
+}

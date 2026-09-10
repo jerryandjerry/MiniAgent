@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build MiniAgent"
+  short_description: "Turn business logic into a verified specialist agent"
+  default_prompt: "Build a MiniAgent application from the provided business brief."

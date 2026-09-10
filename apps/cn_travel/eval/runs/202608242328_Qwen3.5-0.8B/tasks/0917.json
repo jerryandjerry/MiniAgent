@@ -1,0 +1,36 @@
+{
+  "idx": 917,
+  "workflow": "W5",
+  "route": "W5-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 0,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "北京",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 826.9,
+  "rounds": 2,
+  "tokens_in": 6619,
+  "tokens_out": 267,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0917.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

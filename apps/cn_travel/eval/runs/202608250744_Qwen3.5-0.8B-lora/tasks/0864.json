@@ -1,0 +1,43 @@
+{
+  "idx": 864,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "凯里",
+          "end_location": "鹤壁",
+          "city": "鹤壁"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "凯里",
+          "end_location": "鹤壁",
+          "city": "鹤壁"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 766.4,
+  "rounds": 2,
+  "tokens_in": 5401,
+  "tokens_out": 137,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0864.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

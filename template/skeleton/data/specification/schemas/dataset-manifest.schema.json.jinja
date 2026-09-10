@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:miniagent:schema:dataset-manifest:v1",
+  "title": "MiniAgent Dataset Manifest",
+  "description": "The provenance, integrity, split policy, and coverage of a generated application dataset.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "application_id",
+    "created_at",
+    "generator",
+    "source_contracts",
+    "world",
+    "record_schema",
+    "splits",
+    "grouping",
+    "coverage"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "miniagent.dataset-manifest.v1"
+    },
+    "dataset_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "application_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "source_revision",
+        "seed",
+        "command",
+        "source",
+        "configuration",
+        "conversation_validator"
+      ],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "source_revision": {"type": "string", "minLength": 7},
+        "seed": {"type": "integer", "minimum": 0},
+        "command": {"type": "string", "minLength": 1},
+        "source": {"$ref": "#/$defs/artifact"},
+        "configuration": {"$ref": "#/$defs/artifact"},
+        "conversation_validator": {"$ref": "#/$defs/artifact"}
+      }
+    },
+    "source_contracts": {
+      "type": "array",
+      "minItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "source_path", "artifact"],
+        "properties": {
+          "role": {"enum": ["application", "workflow", "tool"]},
+          "source_path": {"$ref": "#/$defs/relative_path"},
+          "artifact": {"$ref": "#/$defs/artifact"}
+        }
+      }
+    },
+    "world": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "world_id",
+        "version",
+        "specification",
+        "simulator",
+        "determinism_check"
+      ],
+      "properties": {
+        "world_id": {"$ref": "#/$defs/identifier"},
+        "version": {"type": "string", "minLength": 1},
+        "specification": {"$ref": "#/$defs/artifact"},
+        "simulator": {"$ref": "#/$defs/artifact"},
+        "determinism_check": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "normalized_queries",
+            "replayed_queries",
+            "conflicts",
+            "evidence"
+          ],
+          "properties": {
+            "normalized_queries": {"type": "integer", "minimum": 1},
+            "replayed_queries": {"type": "integer", "minimum": 1},
+            "conflicts": {"const": 0},
+            "evidence": {"$ref": "#/$defs/artifact"}
+          }
+        }
+      }
+    },
+    "record_schema": {
+      "$ref": "#/$defs/artifact"
+    },
+    "splits": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "purpose",
+          "path",
+          "format",
+          "sha256",
+          "records",
+          "groups",
+          "sealed"
+        ],
+        "properties": {
+          "name": {"$ref": "#/$defs/identifier"},
+          "purpose": {"enum": ["train", "validation", "evaluation", "probe"]},
+          "path": {"$ref": "#/$defs/relative_path"},
+          "format": {"enum": ["json", "jsonl", "parquet"]},
+          "sha256": {"$ref": "#/$defs/sha256"},
+          "records": {"type": "integer", "minimum": 1},
+          "groups": {"type": "integer", "minimum": 1},
+          "sealed": {"type": "boolean"}
+        },
+        "if": {
+          "properties": {"purpose": {"const": "evaluation"}},
+          "required": ["purpose"]
+        },
+        "then": {
+          "properties": {"sealed": {"const": true}}
+        }
+      }
+    },
+    "grouping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "keys", "leakage_check"],
+      "properties": {
+        "strategy": {"const": "grouped"},
+        "keys": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "leakage_check": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "checked_at", "evidence"],
+          "properties": {
+            "status": {"const": "passed"},
+            "checked_at": {"type": "string", "format": "date-time"},
+            "evidence": {"$ref": "#/$defs/artifact"}
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dimension", "expected", "observed", "missing"],
+        "properties": {
+          "dimension": {"$ref": "#/$defs/identifier"},
+          "expected": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "observed": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          },
+          "missing": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relative_path"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

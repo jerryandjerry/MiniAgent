@@ -1,0 +1,70 @@
+{
+  "idx": 932,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "辽阳",
+          "end_location": "丽水",
+          "city": "丽水"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "102.187972,38.521468",
+          "end_location": "丽水",
+          "city": "辽阳"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:city"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "丽水"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "丽水",
+          "start_date": "2026-08-23",
+          "num_days": 3
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 2504.1,
+  "rounds": 4,
+  "tokens_in": 13117,
+  "tokens_out": 895,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0932.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

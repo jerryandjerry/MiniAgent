@@ -1,0 +1,18 @@
+# Data
+
+This area compiles the approved {{ app_name }} contract into deterministic, validated, and frozen training and evaluation artifacts.
+
+- `specification/application.json` is the compiled business contract.
+- `pipeline.py` is the application-owned data builder.
+- `conversation_validator.py` checks question intent and final response content against each route.
+- `scripts/validate.py` validates the contract.
+- `scripts/build.py` runs the builder and seals its output manifest.
+- `config.json` selects a new immutable dataset ID and output paths.
+- `artifacts/<dataset>/` contains one frozen payload and its provenance snapshots.
+- `artifacts/manifests/<dataset>.json` binds the payload, synthetic world, contracts, configuration, coverage, and hashes.
+- `reproducibility/` records generator environments, commands, and source revisions.
+- `tests/` verifies application-specific data invariants.
+
+The builder receives the compiled contract, a temporary staging directory, and the final published directory. It writes into staging and returns a complete `miniagent.dataset-manifest.v1` object whose paths target the published directory. The stable wrapper validates and atomically publishes it.
+
+Each payload record carries `episode_id`, `workflow_id`, `route_id`, `initial_context`, `private_state`, an exact typed `trajectory`, ordered `tool_evidence`, a canonical function-calling `conversation`, `contract_version`, and `generator_version`. Structural replay and the hash-bound application validator check every conversation against its route, frozen evidence, question intent, and response requirements. The hash-bound world simulator exposes `execute(tool_id, normalized_arguments)`; validation invokes it at least twice for every normalized query and requires exact agreement with replay evidence and frozen records. Training views convert the canonical record into the selected model's native format. Training and evaluation partitions each cover every declared route; group keys keep related evidence in one partition.
