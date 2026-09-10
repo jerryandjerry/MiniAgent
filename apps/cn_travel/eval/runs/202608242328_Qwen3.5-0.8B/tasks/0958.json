@@ -1,0 +1,83 @@
+{
+  "idx": 958,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "唐山",
+          "requirements": "评分高一些的"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "唐山"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:requirements"
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "唐山富力洲际酒店",
+          "location": "唐山"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "唐山香格里拉大酒店"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "万逸海派酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "唐山789快捷酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 699.4,
+  "rounds": 3,
+  "tokens_in": 8681,
+  "tokens_out": 194,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0958.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

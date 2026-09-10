@@ -1,0 +1,364 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:miniagent:schema:workflow:v1",
+  "title": "MiniAgent Workflow Contract",
+  "description": "A complete business workflow expressed as an executable state graph and enumerated routes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "application_id",
+    "workflow_id",
+    "name",
+    "goal",
+    "supported_request_ids",
+    "rule_ids",
+    "slots",
+    "route_policy",
+    "initial_state",
+    "states",
+    "transitions",
+    "routes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "miniagent.workflow.v1"
+    },
+    "application_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "workflow_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supported_request_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/identifier"}
+    },
+    "rule_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/identifier"}
+    },
+    "slots": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "description", "source", "schema"],
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/identifier"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source": {
+            "enum": ["context", "user"]
+          },
+          "schema": {
+            "type": "object",
+            "required": ["type"]
+          }
+        }
+      }
+    },
+    "route_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_transition_visits"],
+      "properties": {
+        "max_transition_visits": {"const": 1}
+      }
+    },
+    "initial_state": {
+      "$ref": "#/$defs/identifier"
+    },
+    "states": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/start_state"},
+          {"$ref": "#/$defs/collect_state"},
+          {"$ref": "#/$defs/tool_state"},
+          {"$ref": "#/$defs/tool_batch_state"},
+          {"$ref": "#/$defs/decision_state"},
+          {"$ref": "#/$defs/respond_state"},
+          {"$ref": "#/$defs/refuse_state"},
+          {"$ref": "#/$defs/terminal_state"}
+        ]
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "from", "to", "when"],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/identifier"
+          },
+          "from": {
+            "$ref": "#/$defs/identifier"
+          },
+          "to": {
+            "$ref": "#/$defs/identifier"
+          },
+          "when": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["event"],
+                "properties": {
+                  "event": {"const": "always"}
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["event", "slots_present"],
+                "properties": {
+                  "event": {"const": "user_response"},
+                  "slots_present": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {"$ref": "#/$defs/identifier"}
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["event", "tool", "status"],
+                "properties": {
+                  "event": {"const": "tool_result"},
+                  "tool": {"$ref": "#/$defs/identifier"},
+                  "status": {"enum": ["ok", "empty", "error"]}
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["event", "statuses"],
+                "properties": {
+                  "event": {"const": "tool_batch_result"},
+                  "statuses": {
+                    "type": "object",
+                    "minProperties": 2,
+                    "additionalProperties": {
+                      "enum": ["ok", "empty", "error"]
+                    }
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["event", "expression"],
+                "properties": {
+                  "event": {"const": "condition"},
+                  "expression": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "routes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "initial_slots", "transition_ids", "terminal_state"],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/identifier"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "initial_slots": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/identifier"
+            }
+          },
+          "transition_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/identifier"
+            }
+          },
+          "terminal_state": {
+            "$ref": "#/$defs/identifier"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*$"
+    },
+    "start_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "start"}
+      }
+    },
+    "collect_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "slot", "prompt"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "collect"},
+        "slot": {"$ref": "#/$defs/identifier"},
+        "prompt": {"type": "string", "minLength": 1},
+        "max_attempts": {"type": "integer", "minimum": 1}
+      }
+    },
+    "tool_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "tool", "argument_bindings"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "tool"},
+        "tool": {"$ref": "#/$defs/identifier"},
+        "argument_bindings": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {"$ref": "#/$defs/argument_binding"}
+        }
+      }
+    },
+    "tool_batch_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "calls"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "tool_batch"},
+        "calls": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["tool", "argument_bindings"],
+            "properties": {
+              "tool": {"$ref": "#/$defs/identifier"},
+              "argument_bindings": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {"$ref": "#/$defs/argument_binding"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "decision_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "decision"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "decision"},
+        "decision": {"type": "string", "minLength": 1}
+      }
+    },
+    "argument_binding": {
+      "type": "string",
+      "pattern": "^(?:slot\\.[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*|tool\\.[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*\\.[A-Za-z][A-Za-z0-9_.-]*)$"
+    },
+    "respond_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "content_requirements"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "respond"},
+        "content_requirements": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "refuse_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "policy"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "refuse"},
+        "policy": {"type": "string", "minLength": 1}
+      }
+    },
+    "terminal_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "outcome", "goal_reached"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "kind": {"const": "terminal"},
+        "outcome": {"enum": ["completed", "refused", "failed"]},
+        "goal_reached": {"type": "boolean"}
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {"outcome": {"const": "completed"}},
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {"goal_reached": {"const": true}}
+          }
+        },
+        {
+          "if": {
+            "properties": {"outcome": {"enum": ["refused", "failed"]}},
+            "required": ["outcome"]
+          },
+          "then": {
+            "properties": {"goal_reached": {"const": false}}
+          }
+        }
+      ]
+    }
+  }
+}

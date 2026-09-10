@@ -1,0 +1,291 @@
+{
+  "batch": "20260901_all_entries",
+  "purpose": "Fresh rollout of every existing leaderboard entry against one frozen evaluator and dataset contract.",
+  "status": "complete",
+  "completed_at": "2026-09-01T22:58:26-05:00",
+  "publication": {
+    "completed_entries": 16,
+    "leaderboard_ids": [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17],
+    "leaderboard_sha256": "d72b33be43d10cde220855bbaa69c26fe3ec56641457e17ae7bfde651c56cfef",
+    "leaderboard_html_sha256": "f3db2615ac67d7f7ad372cb81b43d77365b354f92273bc4c934cb25c9379c09f",
+    "canonical_runs_replaced": 16,
+    "fresh_source_runs_retained": true,
+    "prior_canonical_archive": "archive/20260901_pre_full_rebaseline/live_replaced"
+  },
+  "entries": [
+    {
+      "id": 1,
+      "fresh_run": "runs/202609010240_claude-opus-5",
+      "canonical_run": "runs/202608241917_claude-opus-5",
+      "canonical_summary_sha256": "03c2fea7279cb28eab191d5ed587eb1f041ca87f4ab39124526f50c59cfe0908"
+    },
+    {
+      "id": 2,
+      "fresh_run": "runs/202609010024_Qwen3.5-0.8B",
+      "canonical_run": "runs/202608242328_Qwen3.5-0.8B",
+      "canonical_summary_sha256": "666386936cb222cb02d9b99347ab3b80b795881259fcff3496225be1afb17d55"
+    },
+    {
+      "id": 3,
+      "fresh_run": "runs/202609010034_LFM2.5-350M",
+      "canonical_run": "runs/202608242338_LFM2.5-350M",
+      "canonical_summary_sha256": "c6cb9fbc4e73063bad946f8cb542dbdbde973c4a5ed03f99bed85e6f846f7422"
+    },
+    {
+      "id": 4,
+      "fresh_run": "runs/202609010040_Qwen3.5-0.8B-SFT",
+      "canonical_run": "runs/202608250744_Qwen3.5-0.8B-lora",
+      "canonical_summary_sha256": "2bfc250c4dfa6b746fbf179b66ef1c197a9c30b3e76c5e39d5d012dcc063317d"
+    },
+    {
+      "id": 5,
+      "fresh_run": "runs/202609010043_LFM2.5-350M-SFT",
+      "canonical_run": "runs/202608250812_LFM2.5-350M-lora",
+      "canonical_summary_sha256": "3190ca829b9391008bd7a7ec0d5e8ab8b8dccc873e4dd9e6dd1e1bf2b8c3ecb4"
+    },
+    {
+      "id": 6,
+      "fresh_run": "runs/202608312349_gpt-5.6-terra",
+      "canonical_run": "runs/202608251122_gpt-5.6-terra",
+      "canonical_summary_sha256": "a9b25ebd1f795c0053c0c124eb2c821f036a53e0911e315cce69d71000324c41"
+    },
+    {
+      "id": 7,
+      "fresh_run": "runs/202609011906_claude-sonnet-5",
+      "canonical_run": "runs/202608251111_claude-sonnet-5",
+      "canonical_summary_sha256": "b0a03290e79d1c3ee483263eaf95ad707b5a619935b3a95a1edd1fc5d7ba82ad"
+    },
+    {
+      "id": 8,
+      "fresh_run": "runs/202608312350_gpt-5.6-sol",
+      "canonical_run": "runs/202608251122_gpt-5.6-sol",
+      "canonical_summary_sha256": "16364af30fb188a0256e23443f9deb59cbec778bb9ae9b59c694570bef1f6830"
+    },
+    {
+      "id": 10,
+      "fresh_run": "runs/202609010047_Qwen3.5-0.8B-SFT-GRPO-per-step",
+      "canonical_run": "runs/202608261752_Qwen3.5-0.8B-grpo",
+      "canonical_summary_sha256": "bdae44a75572d00b7104a6d30b6406cca369a5fa7d9d17a0468718604a6a04ef"
+    },
+    {
+      "id": 11,
+      "fresh_run": "runs/202609010051_Qwen3.5-0.8B-SFT-GRPO-per-user-turn",
+      "canonical_run": "runs/202608280341_Qwen3.5-0.8B-sft-grpo-traj",
+      "canonical_summary_sha256": "f0190866639b37e943abb59dffc7a8afefb9eb449753a7f822ec6b3d97e82868"
+    },
+    {
+      "id": 12,
+      "fresh_run": "runs/202609010055_Qwen3.5-0.8B-SFT-GRPO-per-user-turn-KL",
+      "canonical_run": "runs/202608281450_Qwen3.5-0.8B-sft-grpo-traj",
+      "canonical_summary_sha256": "374412cd1fd3665b5fbcb8ed27d76a015b56621f5545fc3530abcad2fddc0db8"
+    },
+    {
+      "id": 13,
+      "fresh_run": "runs/202609010059_LFM2.5-350M-SFT-GRPO-per-user-turn",
+      "canonical_run": "runs/202608282250_LFM2.5-350M-sft-grpo-traj",
+      "canonical_summary_sha256": "0b1d01c007307dd97c7506b80e44abfcaf56990856addea4c8788ed43f79185f"
+    },
+    {
+      "id": 14,
+      "fresh_run": "runs/202609010101_LFM2.5-350M-SFT-GRPO-per-step",
+      "canonical_run": "runs/202608290138_LFM2.5-350M-sft-grpo",
+      "canonical_summary_sha256": "cfd21c94716994da9ecfa3afa8a3838a4f375094ac1884533cab3eb709b770eb"
+    },
+    {
+      "id": 15,
+      "fresh_run": "runs/202609010103_LFM2.5-350M-SFT-GRPO-per-trajectory",
+      "canonical_run": "runs/202608300410_LFM2.5-350M-sft-grpo-traj",
+      "canonical_summary_sha256": "ba62c1a9078a672e4b0d943ae222055dc52ca9ed176edaea771d535ae908f28f"
+    },
+    {
+      "id": 16,
+      "fresh_run": "runs/202609010105_LFM2.5-350M-sft-grpo-traj-run2",
+      "canonical_run": "runs/202608302013_LFM2.5-350M-sft-grpo-traj-run2",
+      "canonical_summary_sha256": "199fb7b6309aee81e9747ed09cf709fdf75fdb21254975cb47cff8b7523180c3"
+    },
+    {
+      "id": 17,
+      "fresh_run": "runs/202609010107_LFM2.5-350M-sft-grpo-traj-run3",
+      "canonical_run": "runs/202608310305_LFM2.5-350M-sft-grpo-traj-run3",
+      "canonical_summary_sha256": "16e9a14c9513afd5b688f87eabbf4072b9efe90d7d072e913a04ce84ea91d980"
+    }
+  ],
+  "evaluation": {
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "max_rounds_per_user_turn": 6,
+    "temperature": 0,
+    "evaluator_aggregate_sha256": "ff84248ad16f8ca951ea76e2bfd22136ab2755273b79280f69bd87740db8f411",
+    "evaluator_files": {
+      "evaluate.py": "1520db93a689a7835146f5193707d42128e3c408fd4c0db33f2270727bf2baba",
+      "rollout.py": "619485b12fab184bb85dee6b1d68e1b355c3a9fb3413c20196a92aad366c17ae",
+      "score.py": "037f35bed276a04b8967530c289db99b4b026e657626cd2f4c906a2259ee6586",
+      "world.py": "3087b6b1b2324e4bdda24b0e1dcc1a196b534a68fb7393192dc63b4ad8dd5e11",
+      "tests/test_eval_pipeline.py": "cac0294058877f2f706339ed8ae2da48652ab3a8b98b6b716a59f84260faf4ae"
+    },
+    "dependencies": {
+      "tool_schemas_sha256": "61e46aa71e72b9a5b1f0de360490077b785fa0b408a9c1e21c4573a00f5ea78f",
+      "city_registry_sha256": "a606dbd67988a218244176e84fdca215da5e1901fa890f16f4a3e2e233a60b95",
+      "contracts_sha256": "d2a185b32e74bca80e88b0f374221b15364791c4622dafc196168a2c7acd04c9",
+      "materializer_sha256": "9238bff383029b72b0533836f801d51016e150e54205ea604a8541227a76f222",
+      "exec_cache_files": 1079,
+      "exec_cache_aggregate_sha256": "68ffa38377d8566857cc4a71c96ab00196a5e269415bd2801fd42743fcea3914"
+    }
+  },
+  "integrity_checks": {
+    "step_2": {
+      "records": 1010,
+      "sealed_manifest_matches": 1010,
+      "aggregate_sha256": "e87406de7f6dd7d03e76e4566b9b33ff7ecc6a1b7a78ebcb102340daf9dee481"
+    },
+    "step_3": {
+      "records": 1010,
+      "aggregate_sha256": "005d6effcb9b41dd6fecd67fdec4db7c6026792af30d137aa1df7736b782d36b"
+    },
+    "step_4": {
+      "train_records": 909,
+      "eval_records": 101,
+      "disjoint_complete_union": true,
+      "byte_identical_to_step_3": true,
+      "cross_partition_evidence_atoms": 0
+    },
+    "step_5_exact_merge": true,
+    "step_6": {
+      "train_prefixes": 3632,
+      "eval_records": 101,
+      "eval_byte_identical_to_step_5": true
+    },
+    "golden_calls": 127,
+    "golden_calls_replayed_exactly": 127,
+    "golden_execution_conflicts": 0,
+    "exec_cache_conflicts": 0,
+    "focused_eval_tests": {
+      "passed": 34,
+      "failed": 0
+    },
+    "selected_eval_and_world_policy_tests": {
+      "passed": 97,
+      "failed": 0
+    },
+    "task_boundary_resume_world_equivalence": {
+      "reference_run": "runs/202608312349_gpt-5.6-terra",
+      "tasks": 101,
+      "tool_calls": 152,
+      "result_mismatches": 0,
+      "fallback_log_mismatches": 0
+    }
+  },
+  "channels": {
+    "openai_cli": {
+      "models": [
+        "gpt-5.6-terra",
+        "gpt-5.6-sol"
+      ],
+      "codex_cli": "0.149.0",
+      "codex_executable_sha256": "134063e133f0b4244fa3b251acf973d4fe4b4aeeacbdc135211bf480f59f1477",
+      "reasoning_effort": "medium",
+      "proxy_sha256": "9fe3a47efef89016b244e0ac9ec9eaebc685dca2e0833eb64b83b9e5b3b3d7c9",
+      "shim_sha256": "1c72deff41e64c10fac5aa5474b4c325e2003c583713ccdc58fbd5f9363280a1"
+    },
+    "anthropic_cli": {
+      "models": [
+        "claude-opus-5",
+        "claude-sonnet-5"
+      ],
+      "claude_code": "2.1.252",
+      "claude_executable": "apps/cn_travel/eval/staging/20260901_all_entries/runtime/claude",
+      "claude_executable_sha256": "b661c6a094fcc32656bf7c0071c5b45bf900b34d4f0a1ab3d78fd59aeba2c2c7",
+      "auto_update_disabled": true,
+      "resumable_orchestrator_sha256": "b0a6cd3e6fa456974787c7684216ca278895fe8dbfd48c27d3c43ae4a3a8bd3d",
+      "resume_boundary": "between independent evaluation tasks only",
+      "proxy_sha256": "7fc41aba0582baafeae0a70343a89a5e979269dc5904276b0285df040e3f4b85",
+      "shim_sha256": "1c72deff41e64c10fac5aa5474b4c325e2003c583713ccdc58fbd5f9363280a1",
+      "transport_sha256": "a926b7c8476a95df194352a206d0f4de70fa2a7b0ddbfd634216a5f0b598d557"
+    },
+    "gpu": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "gpu_uuid": "GPU-df716080-20a1-1a25-a974-05647aaa88be",
+      "driver": "570.124.04",
+      "python": "3.12.3",
+      "vllm": "0.28.0",
+      "torch": "2.13.0+cu129",
+      "transformers": "5.10.4",
+      "qwen_parser": "qwen3_xml",
+      "lfm_parser": "lfm2",
+      "note": "Entries 2-5 and 10-14 preserve exact checkpoint bytes but use the CUDA-compatible vLLM 0.28.0 rebaseline runtime. Their old rows recorded vLLM 0.27.1 but did not preserve full server argv; the retained 0.27.1 environment is CUDA 13.0 and cannot initialize on this host's CUDA 12.8 driver. Entries 15-17 retain their historically recorded vLLM 0.28.0 runtime and effective server arguments."
+    }
+  },
+  "model_artifacts": {
+    "qwen_base": {
+      "weights_sha256": "04b1c301231dd422b8860db31311ab2721511346a32cb1e079c4c4e5f1fe4696",
+      "config_sha256": "b90b86f35c8e6925ef74ee04d0e758f0a845c83a42089ad82bbaa948de9b4204",
+      "chat_template_sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80",
+      "tree_sha256": "c10f9c7d80d7001f0d19f2aae3c79e47515abd4930612d364db2aa5d79a0603b"
+    },
+    "lfm_base": {
+      "weights_sha256": "1c9c77a4471a7f590f85240f74ed1fc26df7fbde88c3006724e2f93ca993ea4e",
+      "config_sha256": "720b43d6ddc2ed25be23eed355aefcf342434a176dedad23dbe0a5e3ac24bbb8",
+      "chat_template_sha256": "ba551d58630afa3190b1be3602e28301f3d2e9bbac978dfc49d6d825171648b6",
+      "tree_sha256": "2482cfc6519c4b4c6582c454364c38602b61554a4b46b0dc69cfe07fb1a9b352"
+    },
+    "lfm_sft_reference_merged": {
+      "weights_sha256": "c0da3f10da53f6fd61d868e34f0829579038d44d82afdd11aa148226006b8b22",
+      "manifest_sha256": "3f5b3016ed6d34468cd2e61ca3b521ee8e423a44178682554a1f60aea95b3427",
+      "tree_sha256": "c49f78e7970c769351bb1888e8ee4a45479b02f46c992953948f2a5a67601fff"
+    },
+    "adapters": {
+      "4": {
+        "path": "apps/cn_travel/models/qwen3_5_0_8b_lora/SFT/adapter_vllm/adapter_model.safetensors",
+        "sha256": "207d43240513807ca3a19fbc61bd5d520f9ce8ab4d9e6ba5f2050d2b804e02d7"
+      },
+      "5": {
+        "path": "apps/cn_travel/models/lfm2_5_350m_lora/SFT/adapter/adapter_model.safetensors",
+        "sha256": "6b9c3da26b5b1e672d858eef5ce1bf02c68302c4a6c5b552b210c52991f887e7"
+      },
+      "10": {
+        "path": "apps/cn_travel/models/qwen3_5_0_8b_lora/GRPO_TRL/adapter/adapter_model.safetensors",
+        "sha256": "cee7c1bfa88180d7b614784cb6c5b95624a698e3f08ff133faa60e6ff7a6ed9d"
+      },
+      "11": {
+        "path": "apps/cn_travel/models/qwen3_5_0_8b_lora/GRPO_TRL/adapter_traj/adapter_model.safetensors",
+        "sha256": "a0e2558646e9a7250c4d95a252af641e78b66ead7faabdd683a3ea5a35775994"
+      },
+      "12": {
+        "path": "apps/cn_travel/models/qwen3_5_0_8b_lora/GRPO_TRL/adapter_traj_kl/adapter_model.safetensors",
+        "sha256": "ed83e04993fbe3dc63daf2d5e3c8a959c5fd39163db7fbc714960bcc8118f352"
+      },
+      "13": {
+        "path": "apps/cn_travel/models/lfm2_5_350m_lora/GRPO_TRL/adapter_traj/adapter_model.safetensors",
+        "sha256": "e31a914913737e01cf16089f4e6d8e2f202c4181b0bb848538e8645fda67f92c"
+      },
+      "14": {
+        "path": "apps/cn_travel/models/lfm2_5_350m_lora/GRPO_TRL/adapter_step/adapter_model.safetensors",
+        "sha256": "d016bbbbc549dad3bab9fd6a07b5aa837802219b86e1751232cf107593200eed"
+      },
+      "15": {
+        "path": "apps/cn_travel/models/lfm2_5_350m_lora/GRPO_VERL/adapter_verl/global_step_28/adapter_model.safetensors",
+        "sha256": "cf9c3994838f33e7781d77ec648efa49f86e61f045c14b5fbee8b8751534abbf"
+      },
+      "16": {
+        "path": "apps/cn_travel/models/lfm2_5_350m_lora/GRPO_VERL/adapter_verl_run2/global_step_32/adapter_model.safetensors",
+        "sha256": "84fa08aa2ab59b1b9770896327cf3537ae17cf2d03418e007606d153e62858c1"
+      },
+      "17": {
+        "path": "apps/cn_travel/models/lfm2_5_350m_lora/GRPO_VERL/adapter_verl_run3/global_step_58/adapter_model.safetensors",
+        "sha256": "1977c356ce267380841f639127d48409c79716521e19ff5336a063ca44fcf2fc"
+      }
+    }
+  },
+  "evidence_archives": {
+    "gpu_runs_tar_sha256": "39f337082ea4702f798f6e2bc55f28d134d710a888ae79932541ead066c03868",
+    "gpu_logs_tar_sha256": "1f49f62b81dcb53263b16e0a87c50789cda49f7f582e59760c6cfdf19363c61b",
+    "previous_leaderboard_sha256": "0dc35ca8c5182b5a8072c1a92c4cb86f6d521c5606c6b4b7c089dfc124e37800"
+  },
+  "limitations": [
+    "The earlier leaderboard rows did not record evaluator hashes, full local-server argv, CLI versions, or all base-checkpoint hashes.",
+    "Cloud model IDs are rerun by the same public model identifiers; provider infrastructure and CLI versions are not historical byte artifacts.",
+    "Greedy online serving is not guaranteed to reproduce identical tokens or latency across separate vLLM processes even with identical model bytes.",
+    "The evaluator sources are currently untracked by Git; this contract freezes their bytes for this batch."
+  ]
+}

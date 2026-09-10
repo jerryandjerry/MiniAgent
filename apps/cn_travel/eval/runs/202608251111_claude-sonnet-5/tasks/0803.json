@@ -1,0 +1,37 @@
+{
+  "idx": 803,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "莱州",
+          "end_location": "富锦",
+          "city": "富锦"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 15764.2,
+  "rounds": 1,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0803.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

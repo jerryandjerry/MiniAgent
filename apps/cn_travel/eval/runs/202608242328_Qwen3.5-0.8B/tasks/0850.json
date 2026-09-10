@@ -1,0 +1,70 @@
+{
+  "idx": 850,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "彰化",
+          "end_location": "临海",
+          "city": "临海"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "109.516784,18.774827",
+          "end_location": "临海",
+          "city": "彰化"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:city"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "临海"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "临海",
+          "start_date": "2026-08-23",
+          "num_days": 7
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1956.1,
+  "rounds": 4,
+  "tokens_in": 14182,
+  "tokens_out": 655,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0850.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

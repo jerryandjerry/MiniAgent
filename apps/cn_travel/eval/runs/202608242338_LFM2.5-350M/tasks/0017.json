@@ -1,0 +1,56 @@
+{
+  "idx": 17,
+  "workflow": "W1",
+  "route": "W1-C",
+  "expect": "ok",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "常宁",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "常宁",
+          "search_mode": "vector"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:search_mode"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "常宁",
+          "start_date": "2026-08-30",
+          "num_days": 1
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 2118.5,
+  "rounds": 3,
+  "tokens_in": 11672,
+  "tokens_out": 1134,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0017.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

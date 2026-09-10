@@ -1,0 +1,72 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cn-travel"
+version = "0.1.0"
+description = "Deployable CN Travel agent runtime"
+# milvus-lite 2.4.12 still imports pkg_resources, which Python 3.12 removed,
+# so the runtime is pinned to 3.10/3.11.
+requires-python = ">=3.10,<3.12"
+
+dependencies = [
+    # agent + tools
+    "openai>=1.0.0",
+    "requests>=2.28.0",
+    "python-dotenv>=1.0.0",
+    # HTTP API and RAG
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "jieba>=0.42.1",
+    "sentence-transformers>=3.0",
+    # The packaged index uses the Milvus Lite 2.4 single-file format.
+    "pymilvus==2.5.18",
+    "milvus-lite==2.4.12",
+    # Milvus Lite 2.4 imports pkg_resources.
+    "setuptools>=68,<81",
+    # Application config and typed contracts
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+    # data pipeline
+    "tqdm>=4.65.0",
+    "numpy>=1.26",
+    "scipy>=1.11",
+    # Live review search
+    "ddgs>=9.0.0",
+    # Browser-backed hotel pricing
+    "playwright>=1.40",
+]
+
+[project.optional-dependencies]
+test = [
+    "httpx>=0.27.0",
+    "pytest>=8.0.0",
+]
+inference = [
+    "vllm==0.28.0; sys_platform == 'linux'",
+    "ninja>=1.11; sys_platform == 'linux'",
+]
+models = [
+    "huggingface-hub>=0.30.0",
+]
+
+[project.scripts]
+cn-travel = "cn_travel.cli:main"
+cn-travel-api = "cn_travel.api:main"
+cn-travel-policy = "cn_travel.policy_server:main"
+
+[tool.hatch.build]
+artifacts = [
+    "cn_travel/tool/guide/knowledge_base/**",
+    "cn_travel/model/policy/**",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["cn_travel"]
+
+[tool.hatch.build.targets.sdist]
+include = ["cn_travel", "tests", "pyproject.toml", ".python-version", ".env.example"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

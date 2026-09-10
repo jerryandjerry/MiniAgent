@@ -1,0 +1,49 @@
+.DS_Store
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Promoted model and retrieval payloads remain local; release manifests bind them.
+src/{{ package_name }}/model/policy/**
+!src/{{ package_name }}/model/policy/.gitkeep
+src/{{ package_name }}/model/embedding/**
+!src/{{ package_name }}/model/embedding/.gitkeep
+src/{{ package_name }}/tool/knowledge_base/**
+!src/{{ package_name }}/tool/knowledge_base/.gitkeep
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+
+# Dataset payloads remain local; immutable manifests are source-controlled.
+data/artifacts/**
+!data/artifacts/
+!data/artifacts/.gitkeep
+!data/artifacts/manifests/
+!data/artifacts/manifests/*.json
+
+# Training outputs remain local; each run manifest is source-controlled.
+train/runs/**
+!train/runs/
+!train/runs/.gitkeep
+!train/runs/*/
+!train/runs/*/training-manifest.json
+
+# Evaluation evidence remains local; manifests and the leaderboard are tracked.
+eval/results/runs/**
+!eval/results/runs/
+!eval/results/runs/*/
+!eval/results/runs/*/evaluation-manifest.json
+eval/releases/**
+!eval/releases/
+!eval/releases/*/
+!eval/releases/*/release-manifest.json
+!eval/leaderboard.json

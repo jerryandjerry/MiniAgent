@@ -1,0 +1,55 @@
+{
+  "idx": 3,
+  "workflow": "W1",
+  "route": "W1-B",
+  "expect": "empty",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "惠东",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "惠东"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:search_mode"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "惠东",
+          "start_date": "2026-09-01",
+          "num_days": 2
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 901.0,
+  "rounds": 2,
+  "tokens_in": 5324,
+  "tokens_out": 108,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0003.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

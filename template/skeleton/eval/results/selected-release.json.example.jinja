@@ -1,0 +1,45 @@
+{
+  "schema_version": "miniagent.release-selection.v1",
+  "status": "selected",
+  "package": {{ package_name | to_json }},
+  "evaluation_manifest": {
+    "path": "eval/results/runs/replace-with-evaluation-id/evaluation-manifest.json",
+    "sha256": "replace-with-lowercase-sha256"
+  },
+  "release_manifest": {
+    "path": "eval/releases/replace-with-release-id/release-manifest.json",
+    "sha256": "replace-with-lowercase-sha256"
+  },
+  "artifacts": [
+    {
+      "source": "data/artifacts/replace-with-dataset-id/provenance/contracts/data/specification/application.json",
+      "destination": "{{ package_name }}/business_logic/application.json",
+      "sha256": "replace-with-lowercase-sha256"
+    },
+    {
+      "source": "data/artifacts/replace-with-dataset-id/provenance/contracts/data/specification/workflows/replace-with-workflow.json",
+      "destination": "{{ package_name }}/business_logic/workflows/replace-with-workflow.json",
+      "sha256": "replace-with-lowercase-sha256"
+    },
+    {
+      "source": "data/artifacts/replace-with-dataset-id/provenance/contracts/data/specification/tools/replace-with-tool.json",
+      "destination": "{{ package_name }}/business_logic/tools/replace-with-tool.json",
+      "sha256": "replace-with-lowercase-sha256"
+    },
+    {
+      "source": "train/runs/replace-with-run/artifacts/model.safetensors",
+      "destination": "{{ package_name }}/model/model.safetensors",
+      "sha256": "replace-with-lowercase-sha256"
+    },
+    {
+      "source": "eval/releases/replace-with-release-id/action-parser.py",
+      "destination": "{{ package_name }}/model/action-parser.py",
+      "sha256": "replace-with-lowercase-sha256"
+    },
+    {
+      "source": "train/runs/replace-with-run/artifacts/policy_runtime.py",
+      "destination": "{{ package_name }}/model/policy_runtime.py",
+      "sha256": "replace-with-lowercase-sha256"
+    }
+  ]
+}

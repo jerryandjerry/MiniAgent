@@ -1,0 +1,130 @@
+# =============================================================================
+# Rule: artefacts are ignored, everything that PRODUCES them is tracked.
+# Datasets, corpora and weights are regenerable; the scripts, configs,
+# prompts and contracts that regenerate them are the actual source.
+# =============================================================================
+
+# --- Secrets -----------------------------------------------------------------
+.env
+*.env
+!.env.example
+
+# --- Model weights -----------------------------------------------------------
+# Application training and deployment model artifacts.
+/apps/*/models/
+apps/*/train/base/
+apps/*/train/embedding/
+apps/*/src/*/model/policy/
+apps/*/src/*/model/embedding/
+apps/*/src/*/tool/knowledge_base/
+apps/*/src/*/tool/*/knowledge_base/
+apps/*/models/base/
+**/adapter/
+apps/*/models/embedding/
+apps/*/models/rerank/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.gguf
+
+# Root model research files
+/models/**
+!/models/
+!/models/embedding_model_comparison.md
+!/models/qwen_lfm_small_llm_comparison.md
+!/models/reranker_comparison.md
+
+# --- Datasets ----------------------------------------------------------------
+# Generated datasets are rebuilt with each application's local data pipeline.
+apps/*/data/**
+!apps/*/data/**/
+!apps/*/data/*.md
+!apps/*/data/**/*.md
+# Exclude data from the repository, but track data-processing scripts.
+!apps/*/data/*.py
+!apps/*/data/**/*.py
+!apps/*/data/specification/**
+!apps/*/data/reproducibility/**
+!apps/*/data/**/*config*.json
+!apps/*/data/**/*config*.yaml
+!apps/*/data/**/*config*.yml
+# Dataset payloads are bulky; their immutable manifests remain tracked.
+!apps/*/data/artifacts/manifests/
+!apps/*/data/artifacts/manifests/*.json
+
+# --- Knowledge base ----------------------------------------------------------
+# Application corpora and vector stores.
+apps/*/knowledge_base/**
+!apps/*/knowledge_base/**/
+!apps/*/knowledge_base/**/*.md
+*.db
+*.db.lock
+!apps/*/knowledge_base/README.md
+
+# --- Environments ------------------------------------------------------------
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# --- Tool caches -------------------------------------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Editor / OS -------------------------------------------------------------
+.DS_Store
+*.Zone.Identifier
+.envZone.Identifier
+.cursorindexingignore
+
+# --- Synology Drive conflict copies ------------------------------------------
+*_Conflict.*
+*conflict-copy*
+
+# --- Session history (not project content) -----------------------------------
+.specstory/
+/docs/implementation_notes.md
+/.claude/
+
+# --- Runtime output ----------------------------------------------------------
+*.log
+*.tmp
+*.stdout.tmp
+
+# Evaluation payloads, duplicate archives, and private CLI runtimes stay local.
+apps/*/eval/runs/
+apps/*/eval/archive/
+apps/*/eval/rerun_*/
+apps/*/eval/staging/
+apps/*/eval/results/runs/**
+!apps/*/eval/results/runs/
+!apps/*/eval/results/runs/*/
+!apps/*/eval/results/runs/*/evaluation-manifest.json
+apps/*/eval/releases/**
+!apps/*/eval/releases/
+!apps/*/eval/releases/*/
+!apps/*/eval/releases/*/release-manifest.json
+!apps/*/eval/leaderboard.json
+
+# Trainer outputs are reproducible artifacts; keep their source/configuration.
+apps/*/train/**/adapter*/
+apps/*/train/**/checkpoints*/
+apps/*/train/**/run_*_source/
+apps/*/train/**/sft_reference_merged/
+apps/*/train/**/*.parquet
+apps/*/train/**/task_filter.json
+apps/*/train/**/*.csv
+apps/*/train/**/*.jsonl
+apps/*/train/**/*.out
+apps/*/train/**/*.status
+apps/*/train/runs/**
+!apps/*/train/runs/
+!apps/*/train/runs/*/
+!apps/*/train/runs/*/training-manifest.json

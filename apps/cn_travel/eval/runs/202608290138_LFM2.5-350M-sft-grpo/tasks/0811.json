@@ -1,0 +1,43 @@
+{
+  "idx": 811,
+  "workflow": "W2",
+  "route": "W2-A",
+  "expect": "error",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "110.001598,27.569813",
+          "end_location": "钓鱼岛海域",
+          "city": "怀化市"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "110.001598,27.569813",
+          "end_location": "钓鱼岛海域",
+          "city": "怀化"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 340.3,
+  "rounds": 2,
+  "tokens_in": 5898,
+  "tokens_out": 92,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0811.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

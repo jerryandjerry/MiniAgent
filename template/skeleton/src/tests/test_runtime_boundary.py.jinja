@@ -1,0 +1,50 @@
+import ast
+from pathlib import Path
+
+import {{ package_name }}
+
+
+OFFLINE_AREAS = {"data", "train", "eval"}
+
+
+def test_runtime_package_owns_its_imports() -> None:
+    package_root = Path({{ package_name }}.__file__).resolve().parent
+    violations = []
+    for path in package_root.rglob("*.py"):
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            names = []
+            if isinstance(node, ast.Import):
+                names = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                names = [node.module]
+            for name in names:
+                if name.split(".", 1)[0] in OFFLINE_AREAS:
+                    violations.append(f"{path.relative_to(package_root)}: {name}")
+    assert violations == []
+
+
+def test_agent_depends_on_the_service_facade() -> None:
+    package_root = Path({{ package_name }}.__file__).resolve().parent
+    tree = ast.parse((package_root / "agent.py").read_text(encoding="utf-8"))
+    imported = {
+        (node.level, node.module)
+        for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module
+    }
+    assert (1, "service") in imported
+    assert (1, "model") not in imported
+    assert (1, "tool") not in imported
+
+
+def test_model_layer_has_no_service_or_tool_dependency() -> None:
+    package_root = Path({{ package_name }}.__file__).resolve().parent
+    violations = []
+    for path in (package_root / "model").rglob("*.py"):
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ImportFrom) and node.module:
+                module = node.module.lstrip(".")
+                if module.startswith(("service", "tool")):
+                    violations.append(f"{path.name}: {node.module}")
+    assert violations == []

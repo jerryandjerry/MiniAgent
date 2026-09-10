@@ -1,0 +1,57 @@
+{
+  "idx": 40,
+  "workflow": "W2",
+  "route": "W2-D",
+  "expect": "ok",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "武夷山",
+          "end_location": "大厦大厦",
+          "city": "武夷山"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "武夷山",
+          "end_location": "南宁",
+          "city": "南宁"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "武夷山",
+          "end_location": "南宁",
+          "city": "南宁"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 804.3,
+  "rounds": 4,
+  "tokens_in": 12211,
+  "tokens_out": 247,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0040.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

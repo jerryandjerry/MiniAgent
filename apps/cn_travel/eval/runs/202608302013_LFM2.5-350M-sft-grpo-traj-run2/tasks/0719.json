@@ -1,0 +1,41 @@
+{
+  "idx": 719,
+  "workflow": "W3",
+  "route": "W3-E",
+  "expect": "error",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "钓鱼岛海域",
+          "requirements": ""
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "钓鱼岛海域",
+          "requirements": ""
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 308.9,
+  "rounds": 2,
+  "tokens_in": 5884,
+  "tokens_out": 78,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0719.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

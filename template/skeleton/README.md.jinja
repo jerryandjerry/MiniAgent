@@ -1,0 +1,48 @@
+# {{ app_name }}
+
+{{ description }}
+
+This application is organized into four owned areas:
+
+- `data/`: application specification, synthetic-data pipeline, and frozen artifacts.
+- `train/`: training configuration, entrypoint, and run artifacts.
+- `eval/`: sealed evaluation, evidence, selection, and promotion.
+- `src/`: independently installable and deployable runtime.
+
+## Build sequence
+
+1. Complete `BUSINESS_BRIEF.md`.
+2. Compile it into `data/specification/application.json`, workflow routes, tool contracts, and acceptance criteria.
+3. Set the compiled contract status to `approved` after review.
+4. Implement the data pipeline and semantic conversation validator, then run `make data-build`.
+5. Configure and run `make train`.
+6. Configure the sealed evaluator and run `make eval`.
+7. Bind one passing leaderboard entry and its verified artifacts in the release manifest and `eval/results/selected-release.json`, then run `make promote-runtime`.
+8. Verify the deployable package with `make test-standalone`.
+
+## Commands
+
+```bash
+make help
+make install
+make validate
+make data-build
+make train
+make eval
+make promote-runtime
+make test
+make test-standalone
+make serve
+make chat
+```
+
+Every pre-build command reports the next required contract or artifact. Application-specific implementations keep these command names stable.
+
+## Runtime
+
+```bash
+make install
+make serve
+```
+
+The HTTP service exposes `GET /health`, `GET /ready`, and `POST /v1/chat`. The initial policy reports that business-policy compilation is ready. Promotion binds the selected policy and application artifacts into `src/{{ package_name }}/`.

@@ -1,0 +1,77 @@
+{
+  "idx": 17,
+  "workflow": "W1",
+  "route": "W1-C",
+  "expect": "ok",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "牡丹江",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "牡丹江",
+          "start_date": "2026-08-30",
+          "num_days": 1
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "常宁",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "常宁",
+          "start_date": "2026-08-30",
+          "num_days": 1
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 1912.3,
+  "rounds": 4,
+  "tokens_in": 15110,
+  "tokens_out": 368,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0017.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

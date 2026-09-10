@@ -1,0 +1,13 @@
+{
+  "system": "gpt-5.6-terra",
+  "model": "gpt-5.6-terra",
+  "base_url": "http://127.0.0.1:8766/v1",
+  "note": "OpenAI cloud · codex CLI channel",
+  "price_in_per_mtok": 0.0,
+  "price_out_per_mtok": 0.0,
+  "max_rounds": 6,
+  "temperature": 0,
+  "cases": 101,
+  "started_at": "2026-08-31T23:49:16-05:00",
+  "finished_at": "2026-09-01T00:22:28-05:00"
+}

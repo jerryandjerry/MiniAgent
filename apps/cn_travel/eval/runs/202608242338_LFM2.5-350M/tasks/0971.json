@@ -1,0 +1,55 @@
+{
+  "idx": 971,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "赤水",
+          "requirements": "经济实惠一点"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "赤水",
+          "requirements": "经济型"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:requirements"
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "7天连锁酒店(赤水贵福金街店)",
+          "location": "赤水"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 602.3,
+  "rounds": 2,
+  "tokens_in": 6191,
+  "tokens_out": 295,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0971.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

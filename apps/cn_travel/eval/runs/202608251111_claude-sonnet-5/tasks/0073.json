@@ -1,0 +1,85 @@
+{
+  "idx": 73,
+  "workflow": "W3",
+  "route": "W3-A",
+  "expect": "empty",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "曲阜",
+          "requirements": "高档一点的"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "曲阜",
+          "requirements": "高档"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "曲阜绿发JW万豪酒店",
+          "location": "曲阜"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "曲阜绿发JW万豪酒店",
+          "location": "曲阜"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "曲阜香格里拉大酒店",
+          "location": "曲阜"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "阙里宾舍",
+          "location": "曲阜"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 33148.4,
+  "rounds": 3,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0073.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

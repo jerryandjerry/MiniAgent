@@ -1,0 +1,72 @@
+SHELL := /bin/bash
+.DEFAULT_GOAL := help
+
+MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+APP_DIR := $(patsubst %/,%,$(dir $(MAKEFILE_PATH)))
+SRC_DIR := $(APP_DIR)/src
+PYTEST_CONFIG := $(APP_DIR)/pytest.ini
+
+UV ?= uv
+APP_PYTHON ?= $(UV) run --project "$(SRC_DIR)" python
+TRAIN_PYTHON ?= $(APP_PYTHON)
+EVAL_PYTHON ?= $(APP_PYTHON)
+TRAIN_ARGS ?=
+EVAL_ARGS ?=
+HOST ?= 127.0.0.1
+PORT ?= 8000
+
+.PHONY: help install validate data-build train eval promote-runtime test test-standalone serve chat
+
+help: ## Show application commands
+	@awk 'BEGIN {FS = ":.*## "; printf "{{ app_name }}\n\n"} /^[a-z0-9-]+:.*## / {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}' "$(MAKEFILE_PATH)"
+	@printf '\nVariables\n'
+	@printf '  %-20s %s\n' 'APP_PYTHON' 'Application launcher for validation and promotion'
+	@printf '  %-20s %s\n' 'TRAIN_PYTHON' 'Python command that launches train/run.py'
+	@printf '  %-20s %s\n' 'EVAL_PYTHON' 'Python command that launches eval/evaluate.py'
+	@printf '  %-20s %s\n' 'TRAIN_ARGS' 'Arguments appended to the training command'
+	@printf '  %-20s %s\n' 'EVAL_ARGS' 'Arguments appended to the evaluation command'
+	@printf '  %-20s %s\n' 'HOST / PORT' 'HTTP bind address for make serve'
+
+install: ## Install the standalone runtime and test dependencies
+	@command -v "$(UV)" >/dev/null || { echo "Install uv from https://docs.astral.sh/uv/ and rerun make install" >&2; exit 2; }
+	cd "$(SRC_DIR)" && "$(UV)" sync --extra test
+
+validate: ## Validate the compiled application contract
+	@command -v "$(UV)" >/dev/null || { echo "Run make install to prepare the application environment" >&2; exit 2; }
+	cd "$(APP_DIR)" && $(APP_PYTHON) data/scripts/validate.py
+
+data-build: ## Build and freeze application data
+	@command -v "$(UV)" >/dev/null || { echo "Run make install to prepare the application environment" >&2; exit 2; }
+	cd "$(APP_DIR)" && $(APP_PYTHON) data/scripts/build.py
+
+train: ## Run the configured training entrypoint
+	cd "$(APP_DIR)" && $(TRAIN_PYTHON) train/run.py $(TRAIN_ARGS)
+
+eval: ## Run the configured sealed evaluator
+	cd "$(APP_DIR)" && $(EVAL_PYTHON) eval/evaluate.py $(EVAL_ARGS)
+
+promote-runtime: ## Promote the selected release into the runtime package
+	@command -v "$(UV)" >/dev/null || { echo "Run make install to prepare the application environment" >&2; exit 2; }
+	cd "$(APP_DIR)" && $(APP_PYTHON) eval/promote.py
+
+test: ## Run data, training, evaluation, and runtime tests
+	@command -v "$(UV)" >/dev/null || { echo "Install uv from https://docs.astral.sh/uv/ and rerun make test" >&2; exit 2; }
+	cd "$(APP_DIR)" && "$(UV)" run --project "$(SRC_DIR)" --extra test pytest -c "$(PYTEST_CONFIG)" data/tests train/tests eval/tests src/tests
+
+test-standalone: ## Verify the runtime from its deployable directory
+	@command -v "$(UV)" >/dev/null || { echo "Install uv from https://docs.astral.sh/uv/ and rerun make test-standalone" >&2; exit 2; }
+	@test -f "$(SRC_DIR)/uv.lock" || { echo "Run make install to create src/uv.lock" >&2; exit 2; }
+	@standalone_dir="$$(mktemp -d)"; \
+	trap 'rm -rf "$$standalone_dir"' EXIT; \
+	tar -C "$(SRC_DIR)" \
+		--exclude=.venv --exclude=.pytest_cache --exclude=dist --exclude=build \
+		-cf - . | tar -C "$$standalone_dir" -xf -; \
+	cd "$$standalone_dir" && "$(UV)" sync --frozen --extra test && "$(UV)" run pytest -q tests
+
+serve: ## Start the HTTP API
+	@command -v "$(UV)" >/dev/null || { echo "Run make install to prepare the runtime" >&2; exit 2; }
+	cd "$(SRC_DIR)" && "$(UV)" run python -m {{ package_name }}.cli serve --host "$(HOST)" --port "$(PORT)"
+
+chat: ## Start the interactive client
+	@command -v "$(UV)" >/dev/null || { echo "Run make install to prepare the runtime" >&2; exit 2; }
+	cd "$(SRC_DIR)" && "$(UV)" run python -m {{ package_name }}.cli chat

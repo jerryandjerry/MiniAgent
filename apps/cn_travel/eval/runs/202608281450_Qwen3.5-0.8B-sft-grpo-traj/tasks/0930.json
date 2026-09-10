@@ -1,0 +1,44 @@
+{
+  "idx": 930,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "兴义",
+          "end_location": "迁安",
+          "city": "迁安"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "124.066873,40.45218",
+          "end_location": "迁安",
+          "city": "迁安"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:start_location"
+    }
+  ],
+  "latency_ms": 577.8,
+  "rounds": 2,
+  "tokens_in": 5268,
+  "tokens_out": 99,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0930.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

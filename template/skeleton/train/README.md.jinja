@@ -1,0 +1,7 @@
+# Training
+
+This area trains {{ app_name }} from frozen data artifacts.
+
+`config.json` records the application-owned command, immutable dataset manifest, named training split, framework-specific configuration, and new run manifest path. The command and forwarded arguments are captured as the effective invocation, supporting local scripts, remote launchers, and framework-specific environments through one stable `make train` entrypoint.
+
+Every completed run snapshots both configurations and records its input hashes, code revision, typed base-model artifacts, checkpoints, final policy, action parser, runtime adapter, and runtime measurements under `runs/<run>/`.

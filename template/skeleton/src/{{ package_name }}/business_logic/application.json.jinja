@@ -1,0 +1,36 @@
+{
+  "schema_version": "miniagent.application.v1",
+  "status": "draft",
+  "application_id": {{ package_name | to_json }},
+  "package": {{ package_name | to_json }},
+  "name": {{ app_name | to_json }},
+  "version": "0.1.0",
+  "business": {
+    "objective": {{ description | to_json }},
+    "users": [],
+    "supported_requests": [],
+    "rules": [],
+    "context_fields": [],
+    "systems": [],
+    "outcomes": {
+      "completion": "Return the completed business outcome.",
+      "empty": "Return the approved empty-result outcome.",
+      "error": "Return the approved recoverable or terminal error outcome.",
+      "refusal": "Return the approved out-of-scope response."
+    }
+  },
+  "interfaces": ["api", "cli"],
+  "artifacts": {
+    "workflows": ["data/specification/workflows"],
+    "tools": ["data/specification/tools"],
+    "dataset_manifests": "data/artifacts/manifests",
+    "training_runs": "train/runs",
+    "evaluation_results": "eval/results/runs",
+    "releases": "eval/releases",
+    "runtime_source": "src/{{ package_name }}"
+  },
+  "acceptance": {
+    "criteria": [],
+    "metrics": []
+  }
+}

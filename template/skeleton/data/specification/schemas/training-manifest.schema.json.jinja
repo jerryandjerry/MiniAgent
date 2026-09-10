@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:miniagent:schema:training-manifest:v1",
+  "title": "MiniAgent Training Manifest",
+  "description": "A reproducible completed policy-training run and its immutable outputs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "application_id",
+    "created_at",
+    "trainer",
+    "dataset",
+    "training_split",
+    "base_model",
+    "method",
+    "launcher_configuration",
+    "configuration",
+    "seed",
+    "summary",
+    "outputs",
+    "metrics",
+    "reproducibility",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {"const": "miniagent.training-manifest.v1"},
+    "run_id": {"$ref": "#/$defs/identifier"},
+    "application_id": {"$ref": "#/$defs/identifier"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "trainer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "source_revision", "source", "environment"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "source_revision": {"type": "string", "minLength": 7},
+        "source": {"$ref": "#/$defs/artifact"},
+        "environment": {"$ref": "#/$defs/artifact"}
+      }
+    },
+    "dataset": {"$ref": "#/$defs/artifact"},
+    "training_split": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "purpose",
+        "path",
+        "format",
+        "sha256",
+        "records",
+        "groups",
+        "sealed"
+      ],
+      "properties": {
+        "name": {"$ref": "#/$defs/identifier"},
+        "purpose": {"const": "train"},
+        "path": {"$ref": "#/$defs/relative_path"},
+        "format": {"enum": ["json", "jsonl", "parquet"]},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "records": {"type": "integer", "minimum": 1},
+        "groups": {"type": "integer", "minimum": 1},
+        "sealed": {"type": "boolean"}
+      }
+    },
+    "base_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "revision", "artifacts"],
+      "properties": {
+        "model_id": {"type": "string", "minLength": 1},
+        "revision": {"type": "string", "minLength": 1},
+        "artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "artifact"],
+            "properties": {
+              "role": {"enum": ["base", "tokenizer", "chat_template"]},
+              "artifact": {"$ref": "#/$defs/artifact"}
+            }
+          }
+        }
+      }
+    },
+    "method": {
+      "enum": ["sft", "dpo", "grpo", "trajectory_grpo", "distillation", "other"]
+    },
+    "launcher_configuration": {"$ref": "#/$defs/artifact"},
+    "configuration": {"$ref": "#/$defs/artifact"},
+    "seed": {"type": "integer", "minimum": 0},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["epochs", "optimizer_steps", "rollouts", "wall_time_seconds"],
+      "properties": {
+        "epochs": {"type": "number", "exclusiveMinimum": 0},
+        "optimizer_steps": {"type": "integer", "minimum": 0},
+        "rollouts": {"type": "integer", "minimum": 0},
+        "wall_time_seconds": {"type": "number", "minimum": 0}
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["role", "artifact"],
+        "properties": {
+          "role": {
+            "enum": ["adapter", "merged", "tokenizer", "chat_template", "action_parser", "runtime_adapter", "checkpoint", "metrics", "log"]
+          },
+          "artifact": {"$ref": "#/$defs/artifact"}
+        }
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "value"],
+        "properties": {
+          "name": {"$ref": "#/$defs/identifier"},
+          "value": {"type": "number"},
+          "step": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "reproducibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "argv", "checkpoint_policy", "final_sha256"],
+      "properties": {
+        "command": {"type": "string", "minLength": 1},
+        "argv": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "checkpoint_policy": {"type": "string", "minLength": 1},
+        "final_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "status": {"const": "completed"}
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+"
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "bytes"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relative_path"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

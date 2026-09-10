@@ -1,0 +1,51 @@
+import pytest
+
+from {{ package_name }}.service import ToolError, ToolResult, ToolService
+
+
+def test_tool_result_accepts_each_strict_envelope() -> None:
+    assert ToolResult.ok({"value": 1}).status == "ok"
+    assert ToolResult.empty().data is None
+    failure = ToolResult.failure("upstream", "Provider unavailable", retryable=True)
+    assert failure.error == ToolError("upstream", "Provider unavailable", True)
+
+
+@pytest.mark.parametrize(
+    "result",
+    [
+        lambda: ToolResult(status="other"),
+        lambda: ToolResult(status="ok"),
+        lambda: ToolResult(status="ok", data={}, error=ToolError("x", "x", False)),
+        lambda: ToolResult(status="empty", data={}),
+        lambda: ToolResult(status="error"),
+        lambda: ToolResult(status="error", data={}, error=ToolError("x", "x", False)),
+    ],
+)
+def test_tool_result_rejects_cross_status_fields(result) -> None:
+    with pytest.raises(ValueError):
+        result()
+
+
+def test_dispatch_accepts_registered_tool_and_validates_result() -> None:
+    tools = ToolService()
+    tools.register("lookup", lambda arguments: ToolResult.ok({"id": arguments["id"]}))
+    assert tools.dispatch("lookup", {"id": "A"}).data == {"id": "A"}
+
+    with pytest.raises(ValueError, match="allowlist"):
+        tools.dispatch("write", {})
+
+
+def test_dispatch_rejects_raw_or_mutated_handler_results() -> None:
+    raw_tools = ToolService()
+    raw_tools.register("raw", lambda arguments: {"status": "ok"})
+    with pytest.raises(TypeError, match="ToolResult"):
+        raw_tools.dispatch("raw", {})
+
+    malformed = object.__new__(ToolResult)
+    object.__setattr__(malformed, "status", "ok")
+    object.__setattr__(malformed, "data", None)
+    object.__setattr__(malformed, "error", None)
+    malformed_tools = ToolService()
+    malformed_tools.register("malformed", lambda arguments: malformed)
+    with pytest.raises(ValueError, match="requires data"):
+        malformed_tools.dispatch("malformed", {})

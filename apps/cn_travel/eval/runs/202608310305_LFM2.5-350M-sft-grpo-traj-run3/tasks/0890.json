@@ -1,0 +1,59 @@
+{
+  "idx": 890,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "舒兰",
+          "requirements": "预算250元左右"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "舒兰",
+          "requirements": "预算250元左右一晚"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "维也纳国际酒店(舒兰店)",
+          "location": "舒兰"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "维也纳国际酒店(舒兰店)",
+          "location": "舒兰"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 856.1,
+  "rounds": 3,
+  "tokens_in": 9644,
+  "tokens_out": 303,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0890.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

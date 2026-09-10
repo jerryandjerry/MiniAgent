@@ -1,0 +1,59 @@
+{
+  "idx": 958,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 2,
+  "calls_correct": 2,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "唐山",
+          "requirements": "评分高一些的"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "唐山",
+          "requirements": "评分高一点的"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "唐山富力洲际酒店",
+          "location": "唐山"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "唐山富力洲际酒店",
+          "location": "唐山"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 1153.1,
+  "rounds": 3,
+  "tokens_in": 8629,
+  "tokens_out": 218,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0958.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CN Travel Agent Leaderboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f7f4;
+      --surface: #ffffff;
+      --ink: #111111;
+      --muted: #66645f;
+      --line: #d9d7ce;
+      --accent: #2368b8;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #10100f;
+        --surface: #1b1b19;
+        --ink: #f7f7f4;
+        --muted: #aaa79d;
+        --line: #33322f;
+        --accent: #6aa6f8;
+      }
+    }
+    body {
+      margin: 0;
+      padding: 32px 20px 64px;
+      background: var(--bg);
+      color: var(--ink);
+      font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    .wrap { width: 100%; max-width: 100%; margin: 0 auto; }
+    h1 { font-size: 22px; margin: 0 0 4px; }
+    .sub, .note { color: var(--muted); font-size: 13px; }
+    .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 22px 0 16px; }
+    button {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      padding: 6px 12px;
+    }
+    button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 650; }
+    .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+    table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+    th { color: var(--muted); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    .num { text-align: right; }
+    .rank { width: 1%; color: var(--muted); }
+    .empty { padding: 32px; text-align: center; color: var(--muted); }
+    code { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; }
+    td a { color: inherit; text-decoration: underline dotted; text-underline-offset: 3px; }
+    td a:hover { color: var(--accent); }
+    td.note { color: var(--muted); font-size: 12px; white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>CN Travel Agent Leaderboard</h1>
+    <p class="sub">101 sealed eval tasks (README §6.2) — trace match is all-or-nothing per task;
+      tool-call match is per-call partial credit; W1–W5 are trace match by workflow (45/12/24/10/10 tasks); latency is wall-clock per task.</p>
+    <div class="bar">
+      <span class="sub">Sort by</span>
+      <button type="button" data-key="trace_match" data-better="1" aria-pressed="true">Trace match</button>
+      <button type="button" data-key="toolcall_match" data-better="1" aria-pressed="false">Tool-call match</button>
+      <button type="button" data-key="p50_latency_ms" data-better="-1" aria-pressed="false">p50 latency</button>
+      <button type="button" data-key="p95_latency_ms" data-better="-1" aria-pressed="false">p95 latency</button>
+      <button type="button" data-key="cost_usd_task" data-better="-1" aria-pressed="false">$/task</button>
+    </div>
+    <div class="scroll" id="table"></div>
+  </main>
+  <script type="application/json" id="leaderboard-data">
+[
+  {
+    "id": 1,
+    "name": "claude-opus-5",
+    "version": "claude-opus-5",
+    "run_at": "2026-09-01T19:02:50-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608241917_claude-opus-5",
+    "note": "Anthropic cloud · claude CLI channel",
+    "trace_match": 0.6832,
+    "toolcall_match": 0.7717,
+    "p50_latency_ms": 28547.6,
+    "p95_latency_ms": 67705.5,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7333,
+    "trace_w2": 0.5833,
+    "trace_w3": 0.375,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 2,
+    "name": "Qwen3.5-0.8B",
+    "version": "qwen3.5-0.8b",
+    "run_at": "2026-09-01T00:28:30-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608242328_Qwen3.5-0.8B",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 · exact checkpoint rebaseline",
+    "trace_match": 0.099,
+    "toolcall_match": 0.2441,
+    "p50_latency_ms": 1498.1,
+    "p95_latency_ms": 3511.7,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.0,
+    "trace_w2": 0.0833,
+    "trace_w3": 0.0,
+    "trace_w4": 0.3,
+    "trace_w5": 0.6
+  },
+  {
+    "id": 3,
+    "name": "LFM2.5-350M",
+    "version": "lfm2.5-350m",
+    "run_at": "2026-09-01T00:35:35-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608242338_LFM2.5-350M",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 · exact checkpoint rebaseline",
+    "trace_match": 0.2079,
+    "toolcall_match": 0.0236,
+    "p50_latency_ms": 366.2,
+    "p95_latency_ms": 2643.5,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.0,
+    "trace_w2": 0.0833,
+    "trace_w3": 0.0,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 4,
+    "name": "Qwen3.5-0.8B-SFT",
+    "version": "qwen3.5-0.8b-lora",
+    "run_at": "2026-09-01T00:42:28-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608250744_Qwen3.5-0.8B-lora",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.7723,
+    "toolcall_match": 0.8425,
+    "p50_latency_ms": 1150.6,
+    "p95_latency_ms": 2917.7,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.8,
+    "trace_w2": 0.5,
+    "trace_w3": 0.6667,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 5,
+    "name": "LFM2.5-350M-SFT",
+    "version": "lfm2.5-350m-lora",
+    "run_at": "2026-09-01T00:45:05-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608250812_LFM2.5-350M-lora",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.7426,
+    "toolcall_match": 0.8031,
+    "p50_latency_ms": 538.5,
+    "p95_latency_ms": 1633.1,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7111,
+    "trace_w2": 0.6667,
+    "trace_w3": 0.625,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 6,
+    "name": "gpt-5.6-terra",
+    "version": "gpt-5.6-terra",
+    "run_at": "2026-09-01T00:22:28-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608251122_gpt-5.6-terra",
+    "note": "OpenAI cloud · codex CLI channel",
+    "trace_match": 0.7525,
+    "toolcall_match": 0.8425,
+    "p50_latency_ms": 21198.7,
+    "p95_latency_ms": 31628.6,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.8222,
+    "trace_w2": 0.75,
+    "trace_w3": 0.4167,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 7,
+    "name": "claude-sonnet-5",
+    "version": "claude-sonnet-5",
+    "run_at": "2026-09-01T22:54:06-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608251111_claude-sonnet-5",
+    "note": "Anthropic cloud · claude CLI channel",
+    "trace_match": 0.4752,
+    "toolcall_match": 0.4488,
+    "p50_latency_ms": 17335.9,
+    "p95_latency_ms": 66596.0,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.3778,
+    "trace_w2": 0.3333,
+    "trace_w3": 0.2917,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 8,
+    "name": "gpt-5.6-sol",
+    "version": "gpt-5.6-sol",
+    "run_at": "2026-09-01T00:26:42-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608251122_gpt-5.6-sol",
+    "note": "OpenAI cloud · codex CLI channel",
+    "trace_match": 0.7822,
+    "toolcall_match": 0.8661,
+    "p50_latency_ms": 20020.7,
+    "p95_latency_ms": 36238.8,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.8667,
+    "trace_w2": 0.8333,
+    "trace_w3": 0.4167,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 10,
+    "name": "Qwen3.5-0.8B-SFT-GRPO-per-step",
+    "version": "qwen3.5-0.8b-grpo",
+    "run_at": "2026-09-01T00:49:28-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608261752_Qwen3.5-0.8B-grpo",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.8119,
+    "toolcall_match": 0.8346,
+    "p50_latency_ms": 1130.3,
+    "p95_latency_ms": 2861.3,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.8444,
+    "trace_w2": 0.5,
+    "trace_w3": 0.75,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 11,
+    "name": "Qwen3.5-0.8B-SFT-GRPO-per-user-turn",
+    "version": "qwen3.5-0.8b-traj",
+    "run_at": "2026-09-01T00:53:46-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608280341_Qwen3.5-0.8B-sft-grpo-traj",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.7921,
+    "toolcall_match": 0.7874,
+    "p50_latency_ms": 1001.0,
+    "p95_latency_ms": 2869.8,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.8667,
+    "trace_w2": 0.5,
+    "trace_w3": 0.625,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 12,
+    "name": "Qwen3.5-0.8B-SFT-GRPO-per-user-turn-KL",
+    "version": "qwen3.5-0.8b-traj",
+    "run_at": "2026-09-01T00:58:15-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608281450_Qwen3.5-0.8B-sft-grpo-traj",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.7624,
+    "toolcall_match": 0.8189,
+    "p50_latency_ms": 1119.2,
+    "p95_latency_ms": 2686.5,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.8,
+    "trace_w2": 0.5,
+    "trace_w3": 0.625,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 13,
+    "name": "LFM2.5-350M-SFT-GRPO-per-user-turn",
+    "version": "lfm2.5-350m-traj",
+    "run_at": "2026-09-01T01:00:30-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608282250_LFM2.5-350M-sft-grpo-traj",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.7327,
+    "toolcall_match": 0.7717,
+    "p50_latency_ms": 467.5,
+    "p95_latency_ms": 1605.8,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7556,
+    "trace_w2": 0.75,
+    "trace_w3": 0.4583,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 14,
+    "name": "LFM2.5-350M-SFT-GRPO-per-step",
+    "version": "lfm2.5-350m-step",
+    "run_at": "2026-09-01T01:02:42-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608290138_LFM2.5-350M-sft-grpo",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · exact checkpoint rebaseline",
+    "trace_match": 0.7525,
+    "toolcall_match": 0.8189,
+    "p50_latency_ms": 565.9,
+    "p95_latency_ms": 1648.1,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7556,
+    "trace_w2": 0.5,
+    "trace_w3": 0.6667,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 15,
+    "name": "LFM2.5-350M-SFT-GRPO-per-trajectory",
+    "version": "lfm2.5-350m-traj",
+    "run_at": "2026-09-01T01:04:47-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608300410_LFM2.5-350M-sft-grpo-traj",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · VERL 0.9.0 whole-trajectory GRPO over SFT (470 difficulty-filtered episodes, route-stratified anchors, KL 0.01)",
+    "trace_match": 0.7525,
+    "toolcall_match": 0.8031,
+    "p50_latency_ms": 532.7,
+    "p95_latency_ms": 1607.1,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7333,
+    "trace_w2": 0.6667,
+    "trace_w3": 0.625,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 16,
+    "name": "LFM2.5-350M-SFT-GRPO-per-trajectory-run2",
+    "version": "lfm2.5-350m-traj-run2",
+    "run_at": "2026-09-01T01:07:01-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608302013_LFM2.5-350M-sft-grpo-traj-run2",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · VERL 0.9.0 whole-trajectory GRPO Run #2 over SFT (terminal-success-gated reward, K=4 adaptive probe, KL 0.01)",
+    "trace_match": 0.7426,
+    "toolcall_match": 0.7953,
+    "p50_latency_ms": 539.7,
+    "p95_latency_ms": 1604.6,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7111,
+    "trace_w2": 0.6667,
+    "trace_w3": 0.625,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  },
+  {
+    "id": 17,
+    "name": "LFM2.5-350M-SFT-GRPO-per-trajectory-run3",
+    "version": "lfm2.5-350m-traj-run3",
+    "run_at": "2026-09-01T01:09:11-05:00",
+    "dataset": "apps/cn_travel/data/6_multiturn/leaderboard_eval.json",
+    "dataset_sha256": "f569366318e02df9f99785733038b53667c8958115e4935e39c8e922537abe4a",
+    "cases": 101,
+    "run_dir": "runs/202608310305_LFM2.5-350M-sft-grpo-traj-run3",
+    "note": "RTX 4090 24GB · vLLM 0.28.0 + LoRA r32 · VERL 0.9.0 whole-trajectory GRPO Run #3 over SFT (all 909 episodes, G=8, workflow-stratified batches, KL 0.01)",
+    "trace_match": 0.7525,
+    "toolcall_match": 0.811,
+    "p50_latency_ms": 538.7,
+    "p95_latency_ms": 1618.1,
+    "cost_usd_task": 0.0,
+    "trace_w1": 0.7111,
+    "trace_w2": 0.75,
+    "trace_w3": 0.625,
+    "trace_w4": 1.0,
+    "trace_w5": 1.0
+  }
+]
+  </script>
+  <script>
+    const metrics = [
+      ["trace_match", "Trace match", value => `${(value * 100).toFixed(1)}%`],
+      ["toolcall_match", "Tool-call match", value => `${(value * 100).toFixed(1)}%`],
+      ["trace_w1", "W1", value => `${(value * 100).toFixed(0)}%`],
+      ["trace_w2", "W2", value => `${(value * 100).toFixed(0)}%`],
+      ["trace_w3", "W3", value => `${(value * 100).toFixed(0)}%`],
+      ["trace_w4", "W4", value => `${(value * 100).toFixed(0)}%`],
+      ["trace_w5", "W5", value => `${(value * 100).toFixed(0)}%`],
+      ["p50_latency_ms", "p50 latency", value => `${value.toFixed(0)} ms`],
+      ["p95_latency_ms", "p95 latency", value => `${value.toFixed(0)} ms`],
+      ["cost_usd_task", "$/task", value => `$${value.toFixed(4)}`],
+    ];
+    let entries = [];
+    let sortKey = "trace_match";
+    let sortDirection = 1;
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    // Drill-down chain (§6.2): leaderboard cell -> run summary.json -> tasks/{idx}.json -> transcripts/{idx}.json
+    function runHref(entry, file) {
+      if (!entry.run_dir) return null;
+      return `${encodeURI(String(entry.run_dir))}/${file}`;
+    }
+
+    function metricCell(entry, key, format) {
+      const value = Number(entry[key]);
+      if (!Number.isFinite(value)) return '<td class="num"></td>';
+      const href = runHref(entry, "summary.json");
+      const text = format(value);
+      return href
+        ? `<td class="num"><a href="${href}" title="drill down: summary.json">${text}</a></td>`
+        : `<td class="num">${text}</td>`;
+    }
+
+    function render() {
+      const sorted = [...entries].sort((a, b) => {
+        const left = Number(a[sortKey]);
+        const right = Number(b[sortKey]);
+        if (!Number.isFinite(left)) return 1;
+        if (!Number.isFinite(right)) return -1;
+        return sortDirection > 0 ? right - left : left - right;
+      });
+      document.querySelectorAll("button[data-key]").forEach(button => {
+        button.setAttribute("aria-pressed", String(button.dataset.key === sortKey));
+      });
+      if (!sorted.length) {
+        document.getElementById("table").innerHTML = '<div class="empty">No runs recorded yet.</div>';
+        return;
+      }
+      const rows = sorted.map((entry, index) => {
+        const cells = metrics.map(([key, , format]) => metricCell(entry, key, format)).join("");
+        const dirHref = runHref(entry, "");
+        const nameCell = dirHref
+          ? `<a href="${dirHref}" title="open run dir (tasks/, transcripts/, summary.json)">${escapeHtml(entry.name || "")}</a>`
+          : escapeHtml(entry.name || "");
+        return `<tr><td class="rank">${index + 1}</td>` +
+          `<td>${nameCell}</td>` +
+          `<td>${escapeHtml(entry.version || "")}</td>` +
+          `<td class="num">${escapeHtml(entry.cases ?? "")}</td>` +
+          `${cells}` +
+          `<td class="note">${escapeHtml(entry.note || "")}</td></tr>`;
+      }).join("");
+      document.getElementById("table").innerHTML =
+        '<table><thead><tr><th></th><th>System</th><th>Model</th><th class="num">Cases</th>' +
+        '<th class="num">Trace match</th><th class="num">Tool-call match</th>' +
+        '<th class="num" title="trace match by workflow">W1</th><th class="num">W2</th>' +
+        '<th class="num">W3</th><th class="num">W4</th><th class="num">W5</th>' +
+        '<th class="num">p50 latency</th><th class="num">p95 latency</th>' +
+        '<th class="num">$/task</th><th>Note</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    }
+
+    function embeddedEntries() {
+      const element = document.getElementById("leaderboard-data");
+      if (!element) return [];
+      try {
+        const data = JSON.parse(element.textContent || "[]");
+        return Array.isArray(data) ? data : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function loadEmbedded() {
+      entries = embeddedEntries();
+      render();
+    }
+
+    document.querySelectorAll("button[data-key]").forEach(button => {
+      button.addEventListener("click", () => {
+        sortKey = button.dataset.key;
+        sortDirection = Number(button.dataset.better);
+        render();
+      });
+    });
+
+    if (window.location.protocol === "file:") {
+      loadEmbedded();
+    } else {
+      fetch("leaderboard.json", { cache: "no-store" })
+        .then(response => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then(data => {
+          entries = Array.isArray(data) ? data : [];
+          render();
+        })
+        .catch(loadEmbedded);
+    }
+  </script>
+</body>
+</html>

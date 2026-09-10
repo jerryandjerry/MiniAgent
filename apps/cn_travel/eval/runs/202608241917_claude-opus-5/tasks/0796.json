@@ -1,0 +1,49 @@
+{
+  "idx": 796,
+  "workflow": "W1",
+  "route": "W1-F",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "惠东",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "惠东",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 25530.1,
+  "rounds": 3,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0796.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

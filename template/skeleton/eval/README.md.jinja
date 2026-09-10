@@ -1,0 +1,9 @@
+# Evaluation
+
+This area owns the sealed {{ app_name }} evaluator, evidence, leaderboard, and release selection.
+
+`config.json` declares the application-owned evaluator command, dataset manifest, sealed split, evaluator configuration, and new result manifest. Each validated evaluation records evaluator identity, candidate identity, artifact hashes, metrics, latency, and one transcript and score record per sealed case, then appends immediately to `leaderboard.json`.
+
+Promotion starts from one passing leaderboard entry. Copy `results/selected-release.json.example` to `results/selected-release.json`, then bind the exact leaderboard row, release manifest, training run, evaluation result, selected policy, action parser, runtime adapter, contracts, and complete `src/` inventory. `make promote-runtime` verifies the transitive artifact chain before publishing the deployment manifest.
+
+`reproducibility/` records the evaluator environment, invocation, and source identity used by accepted entries.

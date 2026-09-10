@@ -1,0 +1,9 @@
+{
+  "schema_version": "miniagent.evaluation-run.v1",
+  "status": "draft",
+  "command": [],
+  "dataset_manifest": "data/artifacts/manifests/replace-with-dataset-id.json",
+  "sealed_dataset": "data/artifacts/replace-with-dataset-id/evaluation.jsonl",
+  "evaluator_configuration": "eval/configurations/replace-with-evaluation-id.json",
+  "output_manifest": "eval/results/runs/replace-with-evaluation-id/evaluation-manifest.json"
+}

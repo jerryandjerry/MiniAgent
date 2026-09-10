@@ -1,0 +1,11 @@
+from {{ package_name }}.config import PREFIX, Settings
+
+
+def test_environment_controls_runtime_server(monkeypatch) -> None:
+    monkeypatch.setenv(f"{PREFIX}_HOST", "0.0.0.0")
+    monkeypatch.setenv(f"{PREFIX}_PORT", "9000")
+    monkeypatch.setenv(f"{PREFIX}_LOG_LEVEL", "WARNING")
+    settings = Settings.from_environment()
+    assert settings.host == "0.0.0.0"
+    assert settings.port == 9000
+    assert settings.log_level == "warning"

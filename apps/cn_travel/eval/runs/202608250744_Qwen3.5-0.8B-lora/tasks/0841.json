@@ -1,0 +1,62 @@
+{
+  "idx": 841,
+  "workflow": "W1",
+  "route": "W1-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "都江堰",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "都江堰",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "都江堰",
+          "start_date": "2026-08-25",
+          "num_days": 1
+        }
+      },
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "都江堰",
+          "start_date": "2026-08-25",
+          "num_days": 5
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:num_days"
+    }
+  ],
+  "latency_ms": 2279.5,
+  "rounds": 3,
+  "tokens_in": 12189,
+  "tokens_out": 484,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0841.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,80 @@
+{
+  "idx": 719,
+  "workflow": "W3",
+  "route": "W3-E",
+  "expect": "error",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 3,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "钓鱼岛海域",
+          "requirements": ""
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "荆州"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "钓鱼岛",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "荆州",
+          "start_date": "2026-08-23",
+          "num_days": 7
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "荆州"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 991.7,
+  "rounds": 5,
+  "tokens_in": 14905,
+  "tokens_out": 269,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0719.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

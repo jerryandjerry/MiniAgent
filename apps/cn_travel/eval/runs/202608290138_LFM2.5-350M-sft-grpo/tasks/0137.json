@@ -1,0 +1,89 @@
+{
+  "idx": 137,
+  "workflow": "W1",
+  "route": "W1-E",
+  "expect": "ok",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 1,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "都江堰",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "都江堰",
+          "start_date": "2026-08-23",
+          "num_days": 2
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "都江堰",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "都江堰",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "都江堰",
+          "start_date": "2026-08-31",
+          "num_days": 5
+        }
+      },
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "都江堰",
+          "start_date": "2026-08-31",
+          "num_days": 2
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:num_days"
+    }
+  ],
+  "latency_ms": 2278.8,
+  "rounds": 6,
+  "tokens_in": 39499,
+  "tokens_out": 840,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0137.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

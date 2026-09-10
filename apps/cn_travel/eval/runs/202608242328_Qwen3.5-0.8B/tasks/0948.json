@@ -1,0 +1,50 @@
+{
+  "idx": 948,
+  "workflow": "W4",
+  "route": "W4-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 0,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "漯河",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "漯河",
+          "start_date": "2026-08-23",
+          "num_days": 4
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 2012.2,
+  "rounds": 3,
+  "tokens_in": 12024,
+  "tokens_out": 698,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0948.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,30 @@
+import json
+from pathlib import Path
+
+import {{ package_name }}
+
+
+def test_deployment_manifest_is_packaged() -> None:
+    package_root = Path({{ package_name }}.__file__).resolve().parent
+    manifest = json.loads(
+        (package_root / "deployment_manifest.json").read_text(encoding="utf-8")
+    )
+    assert manifest["application_id"] == "{{ package_name }}"
+    assert {
+        "schema_version",
+        "application_id",
+        "release_id",
+        "version",
+        "status",
+        "artifacts",
+    }.issubset(manifest)
+    assert manifest["schema_version"] == "miniagent.release-manifest.v1"
+    assert manifest["status"] in {"draft", "ready"}
+
+
+def test_runtime_packages_application_and_release_schemas() -> None:
+    package_root = Path({{ package_name }}.__file__).resolve().parent
+    business_logic = package_root / "business_logic"
+    for name in ("application.schema.json", "release.schema.json"):
+        schema = json.loads((business_logic / name).read_text(encoding="utf-8"))
+        assert schema["$schema"] == "https://json-schema.org/draft/2020-12/schema"

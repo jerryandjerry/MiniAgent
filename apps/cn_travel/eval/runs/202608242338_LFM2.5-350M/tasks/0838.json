@@ -1,0 +1,50 @@
+{
+  "idx": 838,
+  "workflow": "W1",
+  "route": "W1-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "清镇",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_weather_info",
+        "args_truth": {
+          "location": "清镇",
+          "start_date": "2026-08-26",
+          "num_days": 4
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 105.2,
+  "rounds": 1,
+  "tokens_in": 2906,
+  "tokens_out": 32,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0838.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

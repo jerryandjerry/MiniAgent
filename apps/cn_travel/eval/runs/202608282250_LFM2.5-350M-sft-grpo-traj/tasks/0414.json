@@ -1,0 +1,50 @@
+{
+  "idx": 414,
+  "workflow": "W2",
+  "route": "W2-C",
+  "expect": "error",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "88.131842,47.827308",
+          "end_location": "钓鱼岛海域",
+          "city": "阿勒泰市"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    },
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "钓鱼岛海域",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 361.4,
+  "rounds": 3,
+  "tokens_in": 8873,
+  "tokens_out": 76,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0414.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

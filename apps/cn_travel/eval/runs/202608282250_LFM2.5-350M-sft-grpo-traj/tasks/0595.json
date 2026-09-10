@@ -1,0 +1,41 @@
+{
+  "idx": 595,
+  "workflow": "W3",
+  "route": "W3-D",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "全季酒店(白山市政府店)",
+          "location": "白山"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "全季酒店(白山市政府店)",
+          "location": "白山市"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 443.6,
+  "rounds": 2,
+  "tokens_in": 6021,
+  "tokens_out": 140,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0595.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

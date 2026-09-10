@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:miniagent:schema:tool:v1",
+  "title": "MiniAgent Tool Contract",
+  "description": "A typed, bounded tool available to an application policy.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "application_id",
+    "tool_id",
+    "name",
+    "description",
+    "side_effect",
+    "determinism",
+    "arguments",
+    "normalization",
+    "outcomes",
+    "execution",
+    "batching",
+    "implementations",
+    "authorization",
+    "idempotency"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "miniagent.tool.v1"
+    },
+    "application_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "tool_id": {
+      "$ref": "#/$defs/identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "side_effect": {
+      "enum": ["none", "read", "write"]
+    },
+    "determinism": {
+      "enum": ["deterministic", "snapshot", "live"]
+    },
+    "arguments": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["type", "properties"],
+      "properties": {
+        "type": {"const": "object"},
+        "properties": {"type": "object"},
+        "required": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": {"type": "boolean"}
+      }
+    },
+    "normalization": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "uniqueItems": true,
+        "items": {
+          "enum": ["unicode_nfkc", "trim", "lowercase", "uppercase", "sort_unique"]
+        }
+      }
+    },
+    "outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ok", "empty", "error"],
+      "properties": {
+        "ok": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "data_schema"],
+          "properties": {
+            "description": {"type": "string", "minLength": 1},
+            "data_schema": {"type": "object", "required": ["type"]}
+          }
+        },
+        "empty": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "reasons"],
+          "properties": {
+            "description": {"type": "string", "minLength": 1},
+            "reasons": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {"$ref": "#/$defs/identifier"}
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["description", "codes"],
+          "properties": {
+            "description": {"type": "string", "minLength": 1},
+            "codes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["code", "description", "retryable"],
+                "properties": {
+                  "code": {"$ref": "#/$defs/identifier"},
+                  "description": {"type": "string", "minLength": 1},
+                  "retryable": {"type": "boolean"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timeout_seconds", "max_attempts", "prerequisites"],
+      "properties": {
+        "timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "prerequisites": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind", "id"],
+            "properties": {
+              "kind": {"enum": ["slot", "tool_result"]},
+              "id": {"$ref": "#/$defs/identifier"}
+            }
+          }
+        }
+      }
+    },
+    "batching": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "compatible_tools"],
+      "properties": {
+        "allowed": {"type": "boolean"},
+        "compatible_tools": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/identifier"}
+        }
+      }
+    },
+    "implementations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "production"],
+      "properties": {
+        "synthetic": {"$ref": "#/$defs/handler"},
+        "production": {"$ref": "#/$defs/handler"}
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "policy"],
+      "properties": {
+        "required": {"type": "boolean"},
+        "policy": {"type": "string", "minLength": 1}
+      }
+    },
+    "idempotency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "key_arguments"],
+      "properties": {
+        "strategy": {
+          "enum": ["none", "normalized_arguments", "explicit_key"]
+        },
+        "key_arguments": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"side_effect": {"const": "write"}},
+        "required": ["side_effect"]
+      },
+      "then": {
+        "properties": {
+          "idempotency": {
+            "properties": {
+              "strategy": {"enum": ["normalized_arguments", "explicit_key"]}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9]*(?:[._-][A-Za-z0-9]+)*$"
+    },
+    "handler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entrypoint"],
+      "properties": {
+        "entrypoint": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.]*:[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "configuration": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

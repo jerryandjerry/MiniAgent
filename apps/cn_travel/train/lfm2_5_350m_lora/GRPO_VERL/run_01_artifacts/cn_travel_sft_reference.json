@@ -1,0 +1,30 @@
+{
+  "schema_version": "cn_travel.sft_reference.v1",
+  "construction": "base_plus_sft_adapter_merge_and_unload_bfloat16",
+  "source": {
+    "base_model": "models/base/LFM2.5-350M",
+    "base_weights_file": "model.safetensors",
+    "base_model_sha256": "1c9c77a4471a7f590f85240f74ed1fc26df7fbde88c3006724e2f93ca993ea4e",
+    "base_config_sha256": "720b43d6ddc2ed25be23eed355aefcf342434a176dedad23dbe0a5e3ac24bbb8",
+    "sft_adapter": "apps/cn_travel/models/lfm2_5_350m_lora/SFT/adapter",
+    "sft_adapter_sha256": "6b9c3da26b5b1e672d858eef5ce1bf02c68302c4a6c5b552b210c52991f887e7",
+    "sft_adapter_config_sha256": "66cf7d073a30dac47164f9452ad5695e4067dc12ef9e507c78548dc63a87c432",
+    "sft_tokenizer_files_sha256": {
+      "chat_template.jinja": "ba551d58630afa3190b1be3602e28301f3d2e9bbac978dfc49d6d825171648b6",
+      "tokenizer.json": "df1d8d5ec5d091b460562ffd545e4a5e91d17d4a0db7ebe733be34ed374377bd",
+      "tokenizer_config.json": "098dbd6e0898526e88f6c133bd75ce8b875730e48fd1739d9888700467779ab1"
+    }
+  },
+  "merged_weights": {
+    "file": "model.safetensors",
+    "sha256": "c0da3f10da53f6fd61d868e34f0829579038d44d82afdd11aa148226006b8b22"
+  },
+  "files": {
+    "chat_template.jinja": "ba551d58630afa3190b1be3602e28301f3d2e9bbac978dfc49d6d825171648b6",
+    "config.json": "44847d64018f44ff6c11e8e4792c9ca8f3f8815b49a12a93d6e563adf640ecd8",
+    "generation_config.json": "7c107abb3c2ee52a4570bf2f8f10effa2dd0ceab70c145f9c608778a08a00324",
+    "model.safetensors": "c0da3f10da53f6fd61d868e34f0829579038d44d82afdd11aa148226006b8b22",
+    "tokenizer.json": "df1d8d5ec5d091b460562ffd545e4a5e91d17d4a0db7ebe733be34ed374377bd",
+    "tokenizer_config.json": "098dbd6e0898526e88f6c133bd75ce8b875730e48fd1739d9888700467779ab1"
+  }
+}

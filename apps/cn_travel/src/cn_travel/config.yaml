@@ -1,0 +1,29 @@
+name: cn_travel
+description: 中国城市旅行助手：行程规划、路线导航、酒店推荐与评价
+language: zh
+
+llm:
+  provider: openai_compat
+  model: cn-travel-policy-cee7c1bfa881
+  base_url: http://127.0.0.1:8000/v1
+
+rag:
+  port: 8010
+  embeddings:
+    # dashscope = metered API; local = local sentence-transformers model with no API charges
+    provider: local
+    model: tool/guide/knowledge_base/embedding/embeddinggemma-300m
+    dims: 768
+    # To use the metered API: provider: dashscope / model: text-embedding-v4 / dims: 1024
+    #
+    # Equal dimensions do not make models interchangeable: 1024-dimensional bge-m3 and
+    # 1024-dimensional text-embedding-v4 use different vector spaces. Changing models requires a full corpus reimport.
+    # The model used to build the index is recorded in the guide tool's knowledge base.
+    # A query-time mismatch produces a warning instead of silently returning invalid results.
+
+tools:
+  - search_travel_guide
+  - get_weather_info
+  - query_route
+  - recommend_hotels
+  - get_hotel_reviews

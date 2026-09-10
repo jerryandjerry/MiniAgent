@@ -1,0 +1,53 @@
+{
+  "idx": 44,
+  "workflow": "W3",
+  "route": "W3-I",
+  "expect": "ok",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "之前订过的那家酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "星程酒店(福州长乐十洋地铁站店)",
+          "location": "长乐"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "星程酒店"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    }
+  ],
+  "latency_ms": 874.0,
+  "rounds": 4,
+  "tokens_in": 10998,
+  "tokens_out": 247,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0044.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

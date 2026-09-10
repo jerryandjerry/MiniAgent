@@ -1,0 +1,87 @@
+{
+  "idx": 853,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "阿图什",
+          "requirements": "预算400元左右"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "阿图什",
+          "requirements": "经济型"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:requirements"
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "克州国际大酒店",
+          "location": "阿图什"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "阿图什万达美华酒店",
+          "location": "阿图什"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "汉庭酒店(阿图什店)",
+          "location": "阿图什"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "维也纳3好酒店(阿图什店)",
+          "location": "阿图什"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 60431.7,
+  "rounds": 3,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0853.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

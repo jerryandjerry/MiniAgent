@@ -1,0 +1,18 @@
+data/knowledge_base/**
+!data/knowledge_base/**/
+!data/knowledge_base/**/*.md
+!data/knowledge_base/city_code_mapping.json
+!data/knowledge_base/README.md
+# Application-owned downloaded runtime assets.
+src/.runtime/
+train/.tmp/
+train/.migration_cache/
+train/**/sft_reference_merged/
+.test-tmp/
+.pytest_cache/
+__pycache__/
+*.py[cod]
+train/base/
+train/embedding/
+src/cn_travel/model/policy/
+src/cn_travel/tool/guide/knowledge_base/

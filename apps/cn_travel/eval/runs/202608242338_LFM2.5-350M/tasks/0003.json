@@ -1,0 +1,42 @@
+{
+  "idx": 3,
+  "workflow": "W1",
+  "route": "W1-B",
+  "expect": "empty",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "惠东",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "惠东",
+          "search_mode": "vector"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:search_mode"
+    }
+  ],
+  "latency_ms": 828.7,
+  "rounds": 2,
+  "tokens_in": 5862,
+  "tokens_out": 74,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0003.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

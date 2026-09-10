@@ -1,0 +1,22 @@
+{
+  "idx": 917,
+  "workflow": "W5",
+  "route": "W5-A",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 0,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [],
+  "latency_ms": 891.2,
+  "rounds": 1,
+  "tokens_in": 2579,
+  "tokens_out": 205,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0917.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

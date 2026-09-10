@@ -1,0 +1,54 @@
+{
+  "idx": 498,
+  "workflow": "W1",
+  "route": "W1-D",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 1,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "中国",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "汾阳",
+          "search_mode": "hybrid"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 540.9,
+  "rounds": 4,
+  "tokens_in": 11958,
+  "tokens_out": 134,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0498.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

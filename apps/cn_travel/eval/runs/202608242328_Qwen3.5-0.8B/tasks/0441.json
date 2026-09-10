@@ -1,0 +1,109 @@
+{
+  "idx": 441,
+  "workflow": "W3",
+  "route": "W3-F",
+  "expect": "empty",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 0,
+  "calls_extra": 4,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "那家酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "亳州",
+          "requirements": "预算450元左右"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "滨州",
+          "requirements": "经济型"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    },
+    {
+      "segment": 1,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "亳州文化公园希尔顿欢朋酒店",
+          "location": "亳州"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "格林豪泰智选酒店(亳州高铁南站店)"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    },
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "亳州",
+          "requirements": "经济型"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "亳州文化公园希尔顿欢朋酒店"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 1,
+      "required": null,
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "全季酒店(亳州北万达广场店)"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1324.9,
+  "rounds": 8,
+  "tokens_in": 24425,
+  "tokens_out": 316,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0441.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

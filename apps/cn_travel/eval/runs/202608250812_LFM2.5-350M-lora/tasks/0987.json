@@ -1,0 +1,60 @@
+{
+  "idx": 987,
+  "workflow": "W3",
+  "route": "W3-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 2,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "recommend_hotels",
+        "args_truth": {
+          "location": "广德",
+          "requirements": "预算450元左右"
+        }
+      },
+      "made": {
+        "tool": "recommend_hotels",
+        "args": {
+          "location": "广德",
+          "requirements": "预算大约450元左右一晚就行"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "如家商旅酒店(广德爱民路政务区店)",
+          "location": "广德"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "全季酒店(广德市政府店)",
+          "location": "广德"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:hotel_name"
+    }
+  ],
+  "latency_ms": 864.7,
+  "rounds": 3,
+  "tokens_in": 9536,
+  "tokens_out": 301,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0987.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

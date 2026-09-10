@@ -1,0 +1,37 @@
+{
+  "idx": 414,
+  "workflow": "W2",
+  "route": "W2-C",
+  "expect": "error",
+  "turns": 2,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 1,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "88.131842,47.827308",
+          "end_location": "钓鱼岛海域",
+          "city": "阿勒泰市"
+        }
+      },
+      "made": null,
+      "correct": false,
+      "reason": "missing"
+    }
+  ],
+  "latency_ms": 14996.8,
+  "rounds": 2,
+  "tokens_in": 0,
+  "tokens_out": 0,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0414.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

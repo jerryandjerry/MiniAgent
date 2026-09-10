@@ -1,0 +1,42 @@
+{
+  "idx": 965,
+  "workflow": "W1",
+  "route": "W1-B",
+  "expect": "empty",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 0,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "search_travel_guide",
+        "args_truth": {
+          "location": "惠东",
+          "search_mode": "hybrid"
+        }
+      },
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "额尔古纳",
+          "search_mode": "vector"
+        }
+      },
+      "correct": false,
+      "reason": "wrong_args:location"
+    }
+  ],
+  "latency_ms": 1925.3,
+  "rounds": 2,
+  "tokens_in": 7583,
+  "tokens_out": 1034,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0965.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

@@ -1,0 +1,43 @@
+{
+  "idx": 850,
+  "workflow": "W2",
+  "route": "W2-B",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": true,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 0,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "query_route",
+        "args_truth": {
+          "start_location": "彰化",
+          "end_location": "临海",
+          "city": "临海"
+        }
+      },
+      "made": {
+        "tool": "query_route",
+        "args": {
+          "start_location": "彰化",
+          "end_location": "临海",
+          "city": "临海"
+        }
+      },
+      "correct": true
+    }
+  ],
+  "latency_ms": 384.9,
+  "rounds": 2,
+  "tokens_in": 6006,
+  "tokens_out": 115,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0850.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}

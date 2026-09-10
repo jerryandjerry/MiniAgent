@@ -1,0 +1,67 @@
+{
+  "idx": 820,
+  "workflow": "W3",
+  "route": "W3-D",
+  "expect": "ok",
+  "turns": 1,
+  "trace_match": false,
+  "calls_required": 1,
+  "calls_correct": 1,
+  "calls_extra": 2,
+  "call_detail": [
+    {
+      "segment": 0,
+      "required": {
+        "tool": "get_hotel_reviews",
+        "args_truth": {
+          "hotel_name": "潍坊富华大酒店(A座)",
+          "location": "潍坊"
+        }
+      },
+      "made": {
+        "tool": "get_hotel_reviews",
+        "args": {
+          "hotel_name": "潍坊富华大酒店(A座)",
+          "location": "潍坊"
+        }
+      },
+      "correct": true
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "search_travel_guide",
+        "args": {
+          "location": "成都"
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    },
+    {
+      "segment": 0,
+      "required": null,
+      "made": {
+        "tool": "get_weather_info",
+        "args": {
+          "location": "成都",
+          "start_date": "2026-08-23",
+          "num_days": 7
+        }
+      },
+      "correct": false,
+      "reason": "extra_call"
+    }
+  ],
+  "latency_ms": 1523.4,
+  "rounds": 3,
+  "tokens_in": 13264,
+  "tokens_out": 489,
+  "cost_usd": 0.0,
+  "transcript": "transcripts/0820.json",
+  "error": null,
+  "cap_hit": false,
+  "complete": true,
+  "rollout_complete": true
+}
